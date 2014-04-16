@@ -23,17 +23,19 @@
 		DailyScheduleSummary (utility)
 
 	CorePowerYoges.BLL
-		our business logic layer, will also handle caching
+		our business logic layer
 		calls into DAL for states, locations, and schedules
 		
 		List<State> GetAllStates();
+		List<State> GetAllStatesWithLocations();
 		State GetStateByAbbreviation(string abbreviation);
 		
 		List<Locations> GetAllLocationsByState(string abbreviation);
 		Location GetLocationById(string id);
 		
-		List<DailyScheduleSummary> GetDailyScheduleSummaries(List<Location>, datetime date);
-		DailyScheduleSummary GetDailyScheduleSummary(string locationId, datetime date);
+		DailyScheduleSummary GetDailyScheduleSummaryByLocationId(string locationId, datetime date);
+
+		GetDailyScheduleByLocationId(string locationId, datetime date);
 	CorePowerYoges.DAL
 		acts as a data access layer, exposing a repository that talks to the underlying json files?
 		states and locations
@@ -47,3 +49,15 @@
 	CorePowerYoges.WebApi
 		acts as the service layer for any external applications
 		this should talk to the BLL
+
+
+app will feature landing page with list of users favorites
+	favorites is a list of locations with a summary
+		when you click on a location you'll get a pivot with the days of the week
+			the user should be placed on whatever day of the week it is
+				if the user swipes to tomorrow, data should be loaded on demand
+
+if you swipe to the right you'll get a list of locations
+	this page will have a list of states, this can be a long list picker (get all states with locations)
+		when you click a state you'll be taken to a list of locations, this can be a long list picker
+			this list will allow you to add a location to your favorites via some sort of heart button
