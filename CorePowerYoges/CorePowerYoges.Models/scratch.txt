@@ -1,0 +1,49 @@
+﻿CorePowerYoges
+	CorePowerYoges.Models
+		State
+			string Abbreviation
+			string Name
+			
+			Location
+				string Id
+				string Name
+				
+				Session
+					DateTime StartTime
+					DateTime EndTime
+					string Name
+					string Teacher
+					string StartTimeLabel
+					string EndTimeLabel
+					string DurationLabel
+					string TimeLabel
+		
+		
+		DailySchedule (utility model for external apps)
+		DailyScheduleSummary (utility)
+
+	CorePowerYoges.BLL
+		our business logic layer, will also handle caching
+		calls into DAL for states, locations, and schedules
+		
+		List<State> GetAllStates();
+		State GetStateByAbbreviation(string abbreviation);
+		
+		List<Locations> GetAllLocationsByState(string abbreviation);
+		Location GetLocationById(string id);
+		
+		List<DailyScheduleSummary> GetDailyScheduleSummaries(List<Location>, datetime date);
+		DailyScheduleSummary GetDailyScheduleSummary(string locationId, datetime date);
+	CorePowerYoges.DAL
+		acts as a data access layer, exposing a repository that talks to the underlying json files?
+		states and locations
+		caches xml files until the file changes
+				
+		talks to the scraper when necessary to get schedules
+		caches schedules for 18 hours
+	CorePowerYoges.Scraper
+		scrapes the core power yoga website for daily schedules
+		writes the schedules to json files on disk
+	CorePowerYoges.WebApi
+		acts as the service layer for any external applications
+		this should talk to the BLL
