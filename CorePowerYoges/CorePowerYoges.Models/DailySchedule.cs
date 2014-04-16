@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.Models
 {
-    class DailySchedule
+    public class DailySchedule
     {
+        public DateTime Date { get; set; }
+        public Location Location { get; set; }
+        public List<Session> Sessions { get; set; }
     }
 }
