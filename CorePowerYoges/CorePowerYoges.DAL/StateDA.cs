@@ -4,11 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CorePowerYoges.Models;
+using System.Web;
+using System.Web.Caching;
 
 namespace CorePowerYoges.DAL
 {
-    public class StateDA
+    public class StateDA : IStateDA
     {
+        Cache _cache = HttpRuntime.Cache;
+
+        static StateDA()
+        {
+            
+        }
+
         public List<State> GetAllStates()
         {
             return new List<State>
