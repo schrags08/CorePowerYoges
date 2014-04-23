@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CorePowerYoges.Models;
+using CorePowerYoges.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,8 @@ namespace CorePowerYoges.BLL
     {
         public List<State> GetAllStates()
         {
+            StateDA daState = new StateDA();
+            return daState.GetAllStates();
         }
     }
 }
