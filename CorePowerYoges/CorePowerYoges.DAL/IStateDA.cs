@@ -9,6 +9,6 @@ namespace CorePowerYoges.DAL
 {
     public interface IStateDA
     {
-        public List<State> GetAllStates;
+        List<State> GetAllStates();
     }
 }

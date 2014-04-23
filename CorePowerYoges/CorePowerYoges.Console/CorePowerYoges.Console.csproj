@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F7C7E5DB-9600-4627-8ACB-70AB8902D84E}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{0CFF6402-CC0E-4A35-A53A-29E36FD943F0}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CorePowerYoges.BLL</RootNamespace>
-    <AssemblyName>CorePowerYoges.BLL</AssemblyName>
+    <RootNamespace>CorePowerYoges.Console</RootNamespace>
+    <AssemblyName>CorePowerYoges.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -39,13 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StateBL.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CorePowerYoges.DAL\CorePowerYoges.DAL.csproj">
-      <Project>{1dd52f56-14f0-4e7d-b7d1-d02e1c814cc2}</Project>
-      <Name>CorePowerYoges.DAL</Name>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CorePowerYoges.BLL\CorePowerYoges.BLL.csproj">
+      <Project>{f7c7e5db-9600-4627-8acb-70ab8902d84e}</Project>
+      <Name>CorePowerYoges.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\CorePowerYoges.Models\CorePowerYoges.Models.csproj">
       <Project>{27af592f-0d5b-4da4-a43e-3cb0a0476df5}</Project>

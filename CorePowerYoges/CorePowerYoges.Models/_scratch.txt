@@ -36,7 +36,10 @@
 		DailyScheduleSummary GetDailyScheduleSummaryByLocationId(string locationId, datetime date);
 
 		GetDailyScheduleByLocationId(string locationId, datetime date);
-	CorePowerYoges.DAL
+	CorePowerYoges.Repository
+		StateRepository
+			GetAllStates
+	CorePowerYoges.DAL (literally our data access layer, interacts with the file system)
 		acts as a data access layer, exposing a repository that talks to the underlying json files?
 		states and locations
 		caches xml files until the file changes
@@ -56,8 +59,12 @@ app will feature landing page with list of users favorites
 		when you click on a location you'll get a pivot with the days of the week
 			the user should be placed on whatever day of the week it is
 				if the user swipes to tomorrow, data should be loaded on demand
+					(we can add the other days of the week with a later release)
 
 if you swipe to the right you'll get a list of locations
-	this page will have a list of states, this can be a long list picker (get all states with locations)
+	this page will have a list of states, this can be a long list picker (get all states with locations) or dropdown
 		when you click a state you'll be taken to a list of locations, this can be a long list picker
 			this list will allow you to add a location to your favorites via some sort of heart button
+
+
+
