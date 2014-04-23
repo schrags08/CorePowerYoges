@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.Models
 {
+    /// <summary>
+    /// Represents a Core Power Yoga Session.  A Location has multiple sessions per day.
+    /// </summary>
     public class Session
     {
         public DateTime StartTime { get; set; }
