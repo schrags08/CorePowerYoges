@@ -13,45 +13,58 @@ namespace CorePowerYoges.DAL
 {
     public class StateDA : IStateDA
     {
+        protected Cache cache = HttpRuntime.Cache;
+
+        protected List<State> AllStatesAndLocations
+        {
+            get
+            {
+                string allStatesAndLocationsCacheKey = "StateDA.AllStatesAndLocations";
+                string locationListPath = @"C:\Users\Matthew\SkyDrive\Project Assets\CorePowerYoges\Source\CorePowerYoges\CorePowerYoges\CorePowerYoges.DAL\Data\LocationList.xml";
+
+                List<State> allStatesFromCache = (List<State>)cache.Get(allStatesAndLocationsCacheKey);
+                if (allStatesFromCache == null)
+                {
+                    allStatesFromCache = LoadLocationListFromDisk(locationListPath);
+                    cache.Insert(allStatesAndLocationsCacheKey, allStatesFromCache, new CacheDependency(locationListPath));
+                }
+                return allStatesFromCache;
+            }
+        }
+        
         public StateDA()
         {
-            var cache = HttpRuntime.Cache;
+        }
 
-            List<State> states = (List<State>)cache.Get("states");
-            if (states == null)
-            {
-                string path = @"C:\Users\Matthew\SkyDrive\Project Assets\CorePowerYoges\Source\CorePowerYoges\CorePowerYoges\CorePowerYoges.DAL\Data\LocationList.xml";
-                states = LoadLocationListFromDisk(path);
-            }
+        public List<State> GetAllStatesAndLocations()
+        {
+            return AllStatesAndLocations;
         }
 
         private List<State> LoadLocationListFromDisk(string filename)
         {
             List<State> states = new List<State>();
-
             if (File.Exists(filename))
             {
-                XDocument locationList = XDocument.Load(filename);
-                if (locationList != null)
+                XDocument locationList = XDocument.Load(filename);                
+                foreach (XElement stateElem in locationList.Descendants("State"))
                 {
-                    foreach (XElement state in locationList.Descendants("State"))
+                    var state = new State()
                     {
-                        var tmpState = new State()
-                        {
-                            Name = state.Attribute("name").Value,
-                            Abbreviation = state.Attribute("id").Value
-                        };                       
+                        Abbreviation = stateElem.Attribute("id").Value,
+                        Name = stateElem.Attribute("name").Value
+                    };                       
 
-                        foreach(XElement location in state.Descendants("Location"))
+                    foreach(XElement locationElem in stateElem.Descendants("Location"))
+                    {
+                        var location = new Location()
                         {
-                            var tmpLocation = new Location();
-                            tmpLocation.Id = location.Attribute("id").Value;
-                            tmpLocation.Name = location.Attribute("name").Value;
-                            tmpState.Locations.Add(tmpLocation);
-                        }
-
-                        states.Add(tmpState);
+                            Id = locationElem.Attribute("id").Value,
+                            Name = locationElem.Attribute("name").Value
+                        };
+                        state.Locations.Add(location);
                     }
+                    states.Add(state);
                 }
             }
             else
@@ -60,11 +73,6 @@ namespace CorePowerYoges.DAL
             }
 
             return states;
-        }
-
-        public List<State> GetAllStates()
-        {
-            throw new NotImplementedException();
         }
     }
 }

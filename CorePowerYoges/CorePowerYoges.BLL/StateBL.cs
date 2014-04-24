@@ -10,10 +10,10 @@ namespace CorePowerYoges.BLL
 {
     public class StateBL
     {
-        public List<State> GetAllStates()
+        public List<State> GetAllStatesAndLocations()
         {
             StateDA daState = new StateDA();
-            return daState.GetAllStates();
+            return daState.GetAllStatesAndLocations();
         }
     }
 }

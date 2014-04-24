@@ -67,4 +67,5 @@ if you swipe to the right you'll get a list of locations
 			this list will allow you to add a location to your favorites via some sort of heart button
 
 
-
+MasterLocationList
+	is a list of States with their respective Locations
