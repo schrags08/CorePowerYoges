@@ -48,7 +48,11 @@
 		caches schedules for 18 hours
 	CorePowerYoges.Scraper
 		scrapes the core power yoga website for daily schedules
-		writes the schedules to json files on disk
+		writes the schedules to json files on disk to be read and cached by the CorePowerYoges service
+		in my initial thoughts this was like a PBDirect sort of thing, where it could run as a batch in the morning
+		retrieving all schedules for a day (or perhaps a week, but i'd be concerned about changes to classes)
+		my intent was decreasing load times as much as possible for the user, but not sure if that's better than just
+		doing it on demand and caching on the fly
 	CorePowerYoges.WebApi
 		acts as the service layer for any external applications
 		this should talk to the BLL
