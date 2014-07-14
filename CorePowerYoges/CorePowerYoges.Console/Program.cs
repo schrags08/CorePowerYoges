@@ -12,13 +12,19 @@ namespace CorePowerYoges.ConsoleTester
     {
         static void Main(string[] args)
         {
-            StateBL blState = new StateBL();
-            //List<State> states = blState.GetAllStatesAndLocations();
-            List<State> states = blState.GetAllStatesWithLocations();
+            LocationBL blLocation = new LocationBL();
+            var locations = blLocation.GetAllLocations();
 
-            foreach (State s in states)
+            var states = locations.Select(l => l.State).Distinct();
+
+            foreach (State s in locations.Select(l => l.State).Distinct())
             {
                 Console.WriteLine(string.Format("{0} ({1})", s.Name, s.Abbreviation));
+
+                foreach (Location l in blLocation.GetLocationsInState(s))
+                {
+                    Console.WriteLine(string.Format("\t{0}: {1}", l.Id, l.Name));
+                }
             }
 
             Console.ReadLine();

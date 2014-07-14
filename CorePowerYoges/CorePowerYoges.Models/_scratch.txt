@@ -60,6 +60,9 @@
 
 app will feature landing page with list of users favorites
 	favorites is a list of locations with a summary
+		for example:
+
+			
 		you can have a maximum of 20 favorites?
 		favorites will be loaded from local storage on phone
 			if no favorites are set, a message to add favorites should be shown
@@ -67,7 +70,7 @@ app will feature landing page with list of users favorites
 
 		when you click on a location you'll get a pivot with the days of the week
 			the user should be placed on whatever day of the week it is
-				to retrieve today's schedule a call to GetDailyScheduleSummary
+				to retrieve today's schedule make a call to GetDailyScheduleSummary
 
 				if the user swipes to tomorrow, data should be loaded on demand
 					(we can add the other days of the week with a later release)

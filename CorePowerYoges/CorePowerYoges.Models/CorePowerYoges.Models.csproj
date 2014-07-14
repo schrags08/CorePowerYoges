@@ -38,6 +38,7 @@
     <Content Include="_scratch.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailySchedule.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />

@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IStateDA.cs" />
+    <Compile Include="ILocationDA.cs" />
+    <Compile Include="LocationDA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StateDA.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CorePowerYoges.Models\CorePowerYoges.Models.csproj">

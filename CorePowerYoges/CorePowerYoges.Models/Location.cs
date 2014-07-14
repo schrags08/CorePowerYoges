@@ -14,18 +14,17 @@ namespace CorePowerYoges.Models
     {
         public string Name { get; set; }
         public string Id { get; set; }
-        public List<Session> Sessions { get; set; }
+        public State State { get; set; }
 
         public Location()
         {
-            this.Sessions = new List<Session>();
         }
 
-        public Location(string name, string id)
+        public Location(string name, string id, State state)
         {
             this.Name = name;
             this.Id = id;
-            this.Sessions = new List<Session>();
+            this.State = state;
         }
     }
 }

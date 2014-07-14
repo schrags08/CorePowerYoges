@@ -13,18 +13,15 @@ namespace CorePowerYoges.Models
     {
         public string Abbreviation { get; set; }
         public string Name { get; set; }
-        public List<Location> Locations { get; set; }
 
         public State()
         {
-            this.Locations = new List<Location>();
         }
 
         public State(string abbreviation, string name)
         {
             this.Abbreviation = abbreviation;
             this.Name = name;
-            this.Locations = new List<Location>();
         }
     }
 }
