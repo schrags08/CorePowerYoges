@@ -13,7 +13,8 @@ namespace CorePowerYoges.ConsoleTester
         static void Main(string[] args)
         {
             StateBL blState = new StateBL();
-            List<State> states = blState.GetAllStatesAndLocations();
+            //List<State> states = blState.GetAllStatesAndLocations();
+            List<State> states = blState.GetAllStatesWithLocations();
 
             foreach (State s in states)
             {

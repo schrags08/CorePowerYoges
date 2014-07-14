@@ -41,6 +41,15 @@ namespace CorePowerYoges.DAL
             return AllStatesAndLocations;
         }
 
+        /// <summary>
+        /// Returns a list of States that have at least one location.
+        /// </summary>
+        /// <returns></returns>
+        public List<State> GetAllStatesWithLocations()
+        {
+            return AllStatesAndLocations.Where(s => s.Locations.Count() > 0).ToList();
+        }
+
         private List<State> LoadLocationListFromDisk(string filename)
         {
             List<State> states = new List<State>();

@@ -15,5 +15,11 @@ namespace CorePowerYoges.BLL
             StateDA daState = new StateDA();
             return daState.GetAllStatesAndLocations();
         }
+
+        public List<State> GetAllStatesWithLocations()
+        {
+            StateDA daState = new StateDA();
+            return daState.GetAllStatesWithLocations();
+        }
     }
 }
