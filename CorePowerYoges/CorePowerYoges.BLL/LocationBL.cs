@@ -27,11 +27,15 @@ namespace CorePowerYoges.BLL
                     allLocationsFromCache = locationDA.GetAllLocations();
 
                     // insert item into cache for 1 day
-                    // TODO externalize cache time
+                    // TODO externalize cache expiration time
                     cache.Insert(locationsCacheKey, allLocationsFromCache, null, DateTime.Now.AddMinutes(1440), Cache.NoSlidingExpiration);
                 }
                 return allLocationsFromCache;
             }
+        }
+
+        public LocationBL()
+        {
         }
 
         public List<Location> GetAllLocations()
@@ -42,6 +46,24 @@ namespace CorePowerYoges.BLL
         public List<Location> GetLocationsInState(State state)
         {
             return AllLocations.Where(l => l.State == state).ToList();
+        }
+
+        /// <summary>
+        /// Gets the first Location via its Id property.
+        /// </summary>
+        /// <param name="id">The Id of the Location you're looking for</param>
+        /// <returns>The Name of the Location or an empty string if there was no match.</returns>
+        public string GetLocationNameById(string id)
+        {
+            var location = AllLocations.FirstOrDefault(l => l.Id == id);
+            var name = string.Empty;
+            
+            if (location != null)
+            {
+                name = location.Name;
+            }
+            
+            return name;
         }
     }
 }
