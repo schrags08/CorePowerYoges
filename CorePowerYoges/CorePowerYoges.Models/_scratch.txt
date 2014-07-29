@@ -48,11 +48,11 @@
 		caches schedules for 18 hours
 	CorePowerYoges.Scraper
 		scrapes the core power yoga website for daily schedules
-		writes the schedules to json files on disk to be read and cached by the CorePowerYoges service
-		in my initial thoughts this was like a PBDirect sort of thing, where it could run as a batch in the morning
-		retrieving all schedules for a day (or perhaps a week, but i'd be concerned about changes to classes)
-		my intent was decreasing load times as much as possible for the user, but not sure if that's better than just
-		doing it on demand and caching on the fly
+
+		/// gets one or many daily schedules, which is made up of a list of sessions, for a given date
+		List<DailySchedule> GetDailyScheduleByLocations(DateTime date, Location location)
+		List<DailySchedule> GetDailyScheduleByLocations(DateTime date, List<Location> locations)
+		
 	CorePowerYoges.WebApi
 		acts as the service layer for any external applications
 		this should talk to the BLL
@@ -60,14 +60,17 @@
 
 app will feature landing page with list of users favorites
 	favorites is a list of locations with a summary
-		you can have a maximum of 10 favorites?
+		for example:
+
+			
+		you can have a maximum of 20 favorites?
 		favorites will be loaded from local storage on phone
 			if no favorites are set, a message to add favorites should be shown
 		to retrieve favorites summary, a call to GetLocationSummaryByIds(string[] ids)
 
 		when you click on a location you'll get a pivot with the days of the week
 			the user should be placed on whatever day of the week it is
-				to retrieve today's schedule a call to GetDailyScheduleSummary
+				to retrieve today's schedule make a call to GetDailyScheduleSummary
 
 				if the user swipes to tomorrow, data should be loaded on demand
 					(we can add the other days of the week with a later release)
@@ -76,6 +79,10 @@ if you swipe to the right you'll get a list of locations
 	this page will have a list of states, this can be a long list picker (get all states with locations) or dropdown
 		when you click a state you'll be taken to a list of locations, this can be a long list picker
 			this list will allow you to add a location to your favorites via some sort of heart button
+
+			ok, so we need a list of states with locations, where do we get it? the DA
+			
+
 
 
 MasterLocationList

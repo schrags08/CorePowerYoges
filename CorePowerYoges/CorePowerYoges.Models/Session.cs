@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CorePowerYoges.Models
 {
     /// <summary>
-    /// Represents a Core Power Yoga Session.  A Location has multiple sessions per day.
+    /// Represents a Core Power Yoga Session.
     /// </summary>
     public class Session
     {
