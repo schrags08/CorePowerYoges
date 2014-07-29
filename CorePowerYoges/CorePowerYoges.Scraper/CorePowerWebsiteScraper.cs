@@ -1,5 +1,4 @@
-﻿using CorePowerYoges.BLL;
-using CorePowerYoges.Models;
+﻿using CorePowerYoges.Models;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -11,38 +10,35 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.Scraper
 {
-    public class CorePowerYogaScraper
+    /// <summary>
+    /// Scrapes the CPY website at www.corepoweryoga.com, caching should be handled externally.
+    /// </summary>
+    public class CorePowerWebsiteScraper : ICorePowerScraper
     {
-        private string scheduleUrl { get; set; }
+        private string scheduleUrlPrefix { get; set; }
+        private string scheduleUrlSuffix { get; set; }
         private string scheduleUrlShortDateFormat { get; set; }
-        private string scheduleUrlOptionsFormat { get; set; }        
 
         /// <summary>
         /// Creates a new CorePowerYogaScraper
         /// </summary>
-        /// <param name="scheduleUrl">The address portion of the Url all the way to the initial query string parameter.
-        /// e.g. "https://www.healcode.com/widgets/schedules/print/ec16baf3?" </param>
-        /// <param name="scheduleUrlShortDateFormat">The short date format required for the Url's date parameters.
-        /// e.g. "yyyy-MM-dd" </param>
-        /// <param name="scheduleUrlOptionsFormat">The format string template for the scheduleUrl's query string parameters.
-        /// e.g. "options[location]={0}&amp;options[start_date]={1}&amp;options[end_date]={2}" </param>
-        public CorePowerYogaScraper(string scheduleUrl, string scheduleUrlShortDateFormat, string scheduleUrlOptionsFormat)
+        public CorePowerWebsiteScraper(string scheduleUrlPrefix, string scheduleUrlSuffix, string scheduleUrlShortDateFormat)
         {
-            this.scheduleUrl = scheduleUrl;
+            this.scheduleUrlPrefix = scheduleUrlPrefix;
+            this.scheduleUrlSuffix = scheduleUrlSuffix;
             this.scheduleUrlShortDateFormat = scheduleUrlShortDateFormat;
-            this.scheduleUrlOptionsFormat = scheduleUrlOptionsFormat;
         }
 
-        public DailySchedule GetDailyScheduleForLocation(DateTime date, Location location)
+        public DailySchedule GetDailyScheduleForLocation(DateTime date, string stateId, string locationId)
         {
-            var locationBL = new LocationBL();
-            var options = string.Format(scheduleUrlOptionsFormat,
-                location.Id,
+            var schedule = new DailySchedule(date.Date);
+
+            var prefix = string.Format(scheduleUrlPrefix, stateId);
+            var suffix = string.Format(scheduleUrlSuffix,
+                locationId,
                 date.ToString(scheduleUrlShortDateFormat),
                 date.ToString(scheduleUrlShortDateFormat));
-            var url = string.Concat(scheduleUrl, options);
-            var schedule = new DailySchedule(date.Date, location);
-            schedule.Location.Name = locationBL.GetLocationNameById(location.Id);
+            var url = string.Concat(prefix, suffix);            
 
             try
             {
@@ -91,10 +87,10 @@ namespace CorePowerYoges.Scraper
             throw new NotImplementedException();
         }
 
-        public List<DailySchedule> GetDailyScheduleForLocations(DateTime date, List<Location> locations)
-        {
-            throw new NotImplementedException();
-        }
+        //public List<DailySchedule> GetDailyScheduleForLocations(DateTime date, List<Location> locations)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public static CorePowerYogaDailySchedule GetDailyScheduleByLocation(DateTime date, CorePowerYogaLocation location)
         //{

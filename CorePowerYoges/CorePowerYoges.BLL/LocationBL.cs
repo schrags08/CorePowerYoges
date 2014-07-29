@@ -13,7 +13,6 @@ namespace CorePowerYoges.BLL
     public class LocationBL
     {
         protected Cache cache = HttpRuntime.Cache;
-
         protected List<Location> AllLocations
         {
             get
@@ -46,6 +45,16 @@ namespace CorePowerYoges.BLL
         public List<Location> GetLocationsInState(State state)
         {
             return AllLocations.Where(l => l.State == state).ToList();
+        }
+
+        public List<Location> GetLocationsInState(string stateAbbr)
+        {
+            return AllLocations.Where(l => l.State.Abbreviation == stateAbbr.ToUpper()).ToList();
+        }
+
+        public Location GetLocationById(string id)
+        {
+            return AllLocations.Where(l => l.Id == id).FirstOrDefault();
         }
 
         /// <summary>

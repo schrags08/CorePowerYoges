@@ -11,6 +11,7 @@ namespace CorePowerYoges.Models
     /// </summary>
     public class State
     {
+        public string Id { get; set; }
         public string Abbreviation { get; set; }
         public string Name { get; set; }
 
@@ -18,10 +19,11 @@ namespace CorePowerYoges.Models
         {
         }
 
-        public State(string abbreviation, string name)
+        public State(string abbreviation, string name, string id)
         {
             this.Abbreviation = abbreviation;
             this.Name = name;
+            this.Id = id;
         }
     }
 }

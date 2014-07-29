@@ -33,8 +33,9 @@ namespace CorePowerYoges.DAL
                 {
                     var state = new State()
                     {
-                        Abbreviation = stateElem.Attribute("id").Value,
-                        Name = stateElem.Attribute("name").Value
+                        Abbreviation = stateElem.Attribute("abbr").Value,
+                        Name = stateElem.Attribute("name").Value,
+                        Id = stateElem.Attribute("id").Value
                     };
 
                     foreach (XElement locationElem in stateElem.Descendants("Location"))

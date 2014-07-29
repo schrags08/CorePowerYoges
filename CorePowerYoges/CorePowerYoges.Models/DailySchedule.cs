@@ -9,17 +9,15 @@ namespace CorePowerYoges.Models
     public class DailySchedule
     {
         public DateTime Date { get; set; }
-        public Location Location { get; set; }
         public List<Session> Sessions { get; set; }
         public int TotalClasses { get { return this.Sessions.Count(); } }
         public int RemainingClasses { get { return this.Sessions.Where(c => c.StartTime >= DateTime.Now).Count(); } }
         public string TotalClassesLabel { get { return this.GetTotalClassesLabel(this.TotalClasses); } }
         public string RemainingClassesLabel { get { return this.GetRemainingClassesLabel(this.RemainingClasses); } }
 
-        public DailySchedule(DateTime date, Location location)
+        public DailySchedule(DateTime date)
         {
             this.Date = date;
-            this.Location = location;
             this.Sessions = new List<Session>();
         }
 

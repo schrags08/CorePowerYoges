@@ -35,7 +35,11 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,17 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CorePowerYogaScraper.cs" />
+    <Compile Include="CorePowerWebsiteScraper.cs" />
+    <Compile Include="ICorePowerScraper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CorePowerYoges.BLL\CorePowerYoges.BLL.csproj">
-      <Project>{f7c7e5db-9600-4627-8acb-70ab8902d84e}</Project>
-      <Name>CorePowerYoges.BLL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CorePowerYoges.Models\CorePowerYoges.Models.csproj">
       <Project>{27af592f-0d5b-4da4-a43e-3cb0a0476df5}</Project>
       <Name>CorePowerYoges.Models</Name>
