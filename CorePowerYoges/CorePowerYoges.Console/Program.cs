@@ -1,6 +1,6 @@
 ﻿using CorePowerYoges.BLL;
 using CorePowerYoges.Models;
-using CorePowerYoges.Scraper;
+using CorePowerYoges.Util;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -32,8 +32,11 @@ namespace CorePowerYoges.ConsoleTester
 
         private static void Init()
         {
-            blLocation = new LocationBL();            
-            blDailySchedule = new DailyScheduleBL();
+            blLocation = new LocationBL();
+            blDailySchedule = new DailyScheduleBL(ConfigurationHelpers.ScraperUrlBase,
+                ConfigurationHelpers.ScraperUrlQueryString,
+                ConfigurationHelpers.ScraperUrlShortDateFormat,
+                ConfigurationHelpers.ScraperCacheDurationInMinutes);
         }
 
         private static void PrintDailyScheduleForLocation(DateTime dateTime, string locationId)
