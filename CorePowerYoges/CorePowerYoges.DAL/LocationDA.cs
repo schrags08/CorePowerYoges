@@ -18,7 +18,7 @@ namespace CorePowerYoges.DAL
         public List<Location> GetAllLocations()
         {
             // TODO replace with external value
-            string locationListPath = @"C:\Users\Matthew\SkyDrive\Project Assets\CorePowerYoges\Source\CorePowerYoges\CorePowerYoges\CorePowerYoges.DAL\Data\LocationList.xml";
+            string locationListPath = @"C:\Users\Matthew\GitProjects\CorePowerYoges\CorePowerYoges\CorePowerYoges.DAL\Data\LocationList.xml";
 
             return LoadLocationsFromDisk(locationListPath); 
         }

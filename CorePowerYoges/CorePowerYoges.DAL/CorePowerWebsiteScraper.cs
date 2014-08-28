@@ -8,37 +8,39 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CorePowerYoges.Scraper
+namespace CorePowerYoges.DAL
 {
     /// <summary>
     /// Scrapes the CPY website at www.corepoweryoga.com, caching should be handled externally.
     /// </summary>
-    public class CorePowerWebsiteScraper : ICorePowerScraper
+    public class CorePowerWebsiteScraper : IDailyScheduleDA
     {
-        private string scheduleUrlPrefix { get; set; }
-        private string scheduleUrlSuffix { get; set; }
-        private string scheduleUrlShortDateFormat { get; set; }
+        private string ScraperUrlBase { get; set; }
+        private string ScraperUrlQueryString { get; set; }
+        private string ScraperUrlShortDateFormat { get; set; }
 
         /// <summary>
         /// Creates a new CorePowerYogaScraper
         /// </summary>
-        public CorePowerWebsiteScraper(string scheduleUrlPrefix, string scheduleUrlSuffix, string scheduleUrlShortDateFormat)
+        public CorePowerWebsiteScraper(string scraperUrlBase,
+            string scraperUrlQueryString,
+            string scraperUrlShortDateFormat)
         {
-            this.scheduleUrlPrefix = scheduleUrlPrefix;
-            this.scheduleUrlSuffix = scheduleUrlSuffix;
-            this.scheduleUrlShortDateFormat = scheduleUrlShortDateFormat;
+            this.ScraperUrlBase = scraperUrlBase;
+            this.ScraperUrlQueryString = scraperUrlQueryString;
+            this.ScraperUrlShortDateFormat = scraperUrlShortDateFormat;
         }
 
-        public DailySchedule GetDailyScheduleForLocation(DateTime date, string stateId, string locationId)
+        public DailySchedule GetDailyScheduleByStateAndLocation(DateTime date, string stateId, string locationId)
         {
             var schedule = new DailySchedule(date.Date);
 
-            var prefix = string.Format(scheduleUrlPrefix, stateId);
-            var suffix = string.Format(scheduleUrlSuffix,
+            var prefix = string.Format(ScraperUrlBase, stateId);
+            var suffix = string.Format(ScraperUrlQueryString,
                 locationId,
-                date.ToString(scheduleUrlShortDateFormat),
-                date.ToString(scheduleUrlShortDateFormat));
-            var url = string.Concat(prefix, suffix);            
+                date.ToString(ScraperUrlShortDateFormat),
+                date.ToString(ScraperUrlShortDateFormat));
+            var url = string.Concat(prefix, suffix);
 
             try
             {
