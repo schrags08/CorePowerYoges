@@ -59,10 +59,6 @@
       <Project>{27af592f-0d5b-4da4-a43e-3cb0a0476df5}</Project>
       <Name>CorePowerYoges.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CorePowerYoges.Scraper\CorePowerYoges.Scraper.csproj">
-      <Project>{53e0ea7f-23c8-4c35-b419-32e12cfb16b8}</Project>
-      <Name>CorePowerYoges.Scraper</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
