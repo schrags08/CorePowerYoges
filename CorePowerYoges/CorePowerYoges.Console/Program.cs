@@ -20,6 +20,8 @@ namespace CorePowerYoges.ConsoleTester
         {
             Init();
 
+            PrintSeparator();
+
             PrintAllStatesWithLocations();
 
             PrintSeparator();
@@ -62,7 +64,7 @@ namespace CorePowerYoges.ConsoleTester
 
             if (states.Count() > 0)
             {
-                Console.WriteLine("All States With Locations:");
+                Console.WriteLine("All States With Locations:\n");
 
                 foreach (State state in states)
                 {
@@ -80,7 +82,7 @@ namespace CorePowerYoges.ConsoleTester
 
             if (locations.Count() > 0)
             {
-                Console.WriteLine(string.Format("All Locations in {0}:", stateAbbr));
+                Console.WriteLine(string.Format("All Locations in {0}:\n", stateAbbr));
 
                 foreach (Location location in locations)
                 {
@@ -96,7 +98,7 @@ namespace CorePowerYoges.ConsoleTester
 
             if (dailySchedule.Sessions.Count() > 0)
             {
-                Console.WriteLine(string.Format("Daily Schedule for {0} ({1}):", 
+                Console.WriteLine(string.Format("Daily Schedule for {0} ({1}):\n", 
                     location.Name, 
                     date.ToShortDateString()));
 
