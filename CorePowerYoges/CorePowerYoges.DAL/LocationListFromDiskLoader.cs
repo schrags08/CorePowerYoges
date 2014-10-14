@@ -9,18 +9,13 @@ using System.Xml.Linq;
 
 namespace CorePowerYoges.DAL
 {
-    public class LocationFromDiskLoader : ILocationDA
+    public class LocationListFromDiskLoader : ILocationDA
     {
         private string locationListPath;
 
-        public LocationFromDiskLoader(string locationListPath)
+        public LocationListFromDiskLoader(string locationListPath)
         {
             this.locationListPath = locationListPath;
-        }
-
-        public IEnumerable<Location> GetAllLocations()
-        {
-            return LoadLocationsFromDisk(locationListPath); 
         }
 
         private IEnumerable<Location> LoadLocationsFromDisk(string filename)
@@ -48,7 +43,7 @@ namespace CorePowerYoges.DAL
                         };
 
                         locations.Add(location);
-                    }                    
+                    }
                 }
             }
             else
@@ -57,6 +52,11 @@ namespace CorePowerYoges.DAL
             }
 
             return locations;
+        }
+
+        public IEnumerable<Location> GetAllLocations()
+        {
+            return LoadLocationsFromDisk(locationListPath).OrderBy(l => l.Name);
         }
     }
 }

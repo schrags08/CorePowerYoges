@@ -22,11 +22,17 @@ namespace CorePowerYoges.ConsoleTester
 
             PrintAllStatesWithLocations();
 
-            PrintAllLocationsInState("MN");
+            PrintSeparator();
 
-            PrintDailyScheduleForLocation(DateTime.Now, "864_3");
+            PrintAllLocationsInState("IL");
 
-            PrintDailyScheduleForLocation(DateTime.Now, "864_3");
+            PrintSeparator();
+
+            PrintDailyScheduleForLocation(DateTime.Now, "864_23");
+
+            PrintSeparator();
+
+            //PrintDailyScheduleForLocation(DateTime.Now, "864_3");
 
             //PrintDailyScheduleForLocation(DateTime.Now.AddDays(1), "864_3");
 
@@ -35,8 +41,8 @@ namespace CorePowerYoges.ConsoleTester
 
         private static void Init()
         {
-            var locationFromDiskLoader = new LocationFromDiskLoader(ConfigurationHelpers.LocationListPath);
-            blLocation = new LocationBL(locationFromDiskLoader,
+            var locationListFromDiskLoader = new LocationListFromDiskLoader(ConfigurationHelpers.LocationListPath);
+            blLocation = new LocationBL(locationListFromDiskLoader,
                 ConfigurationHelpers.AllLocationCacheDurationInMinutes);
 
             var websiteScraper = new CorePowerWebsiteScraper(ConfigurationHelpers.WebsiteScraperUrlBaseFormatString,
@@ -45,46 +51,60 @@ namespace CorePowerYoges.ConsoleTester
                 ConfigurationHelpers.DailyScheduleForLocationCacheDurationInMinutes);
         }
 
-        private static void PrintDailyScheduleForLocation(DateTime dateTime, string locationId)
+        private static void PrintSeparator()
         {
-            var location = blLocation.GetLocationById(locationId);
-            var dailySchedule = blDailySchedule.GetDailyScheduleForLocation(dateTime, location);
+            Console.WriteLine("==============================");
+        }
 
-            Console.WriteLine(string.Format("{0}: ", location.Name));
+        private static void PrintAllStatesWithLocations()
+        {
+            var states = blLocation.GetAllStatesContainingLocations();
 
-            foreach (Session session in dailySchedule.Sessions)
+            if (states.Count() > 0)
             {
-                Console.WriteLine(string.Format("{0} ({1})", session.Name, session.Teacher));
+                Console.WriteLine("All States With Locations:");
+
+                foreach (State state in states)
+                {
+                    Console.WriteLine(string.Format("{0} ({1}) - {2}",
+                        state.Name,
+                        state.Abbreviation,
+                        state.Id));
+                }
             }
         }
 
         private static void PrintAllLocationsInState(string stateAbbr)
         {
-            var locations = blLocation.GetLocationsInState(stateAbbr);
+            var locations = blLocation.GetAllLocationsInStateByStateAbbreviation(stateAbbr);
 
             if (locations.Count() > 0)
             {
-                Console.WriteLine(stateAbbr);
-            }
+                Console.WriteLine(string.Format("All Locations in {0}:", stateAbbr));
 
-            foreach (Location l in locations)
-            {
-                Console.WriteLine(string.Format("{0}: {1}", l.Id, l.Name));
+                foreach (Location location in locations)
+                {
+                    Console.WriteLine(string.Format("{0} - {1}", location.Name, location.Id));
+                }
             }
         }
 
-        private static void PrintAllStatesWithLocations()
+        private static void PrintDailyScheduleForLocation(DateTime date, string locationId)
         {
-            var locations = blLocation.GetAllLocations();
-            var states = locations.Select(l => l.State).Distinct();
+            var location = blLocation.GetLocationById(locationId);
+            var dailySchedule = blDailySchedule.GetDailyScheduleByLocation(date, location);
 
-            foreach (State s in states)
+            if (dailySchedule.Sessions.Count() > 0)
             {
-                Console.WriteLine(string.Format("{0} ({1}) - {2}",
-                    s.Name,
-                    s.Abbreviation,
-                    s.Id));
-            }
+                Console.WriteLine(string.Format("Daily Schedule for {0} ({1}):", 
+                    location.Name, 
+                    date.ToShortDateString()));
+
+                foreach (Session session in dailySchedule.Sessions)
+                {
+                    Console.WriteLine(string.Format("{0} ({1})", session.Name, session.Teacher));
+                }
+            }            
         }
     }
 }

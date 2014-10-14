@@ -24,7 +24,7 @@ namespace CorePowerYoges.BLL
 
         public IEnumerable<Location> GetAllLocations()
         {
-            string allLocationsCacheKey = "LocationBL.AllLocations";
+            string allLocationsCacheKey = "LocationBL-AllLocations";
             IEnumerable<Location> allLocationsFromCache = (IEnumerable<Location>)cache.Get(allLocationsCacheKey);
 
             if (allLocationsFromCache == null)
@@ -37,28 +37,33 @@ namespace CorePowerYoges.BLL
             }
 
             return allLocationsFromCache;
-        }
-
-        public IEnumerable<Location> GetLocationsInState(State state)
-        {
-            return GetAllLocations().Where(l => l.State == state);
-        }
-
-        public IEnumerable<Location> GetLocationsInState(string stateAbbr)
-        {
-            return GetAllLocations().Where(l => l.State.Abbreviation == stateAbbr.ToUpper());
-        }
+        }        
 
         public Location GetLocationById(string id)
         {
             return GetAllLocations().Where(l => l.Id == id).FirstOrDefault();
         }
 
-        /// <summary>
-        /// Gets a Location's Name via its Id property.
-        /// </summary>
-        /// <param name="id">The Id of the Location you're looking for</param>
-        /// <returns>The Name of the Location or an empty string if there was no match.</returns>
+        public IEnumerable<Location> GetAllLocationsInState(State state)
+        {
+            return GetAllLocations().Where(l => l.State == state).OrderBy(l => l.Name);
+        }
+
+        public IEnumerable<Location> GetAllLocationsInStateByStateId(string stateId)
+        {
+            return GetAllLocations().Where(l => l.State.Id == stateId).OrderBy(l => l.Name);
+        }
+
+        public IEnumerable<Location> GetAllLocationsInStateByStateAbbreviation(string stateAbbr)
+        {
+            return GetAllLocations().Where(l => l.State.Abbreviation == stateAbbr.ToUpper()).OrderBy(l => l.Name);
+        }
+
+        public IEnumerable<State> GetAllStatesContainingLocations()
+        {
+            return GetAllLocations().Select(l => l.State).Distinct().OrderBy(s => s.Name);
+        }
+
         public string GetLocationNameById(string id)
         {
             var name = string.Empty;
@@ -68,7 +73,7 @@ namespace CorePowerYoges.BLL
             {
                 name = location.Name;
             }
-            
+
             return name;
         }
     }

@@ -28,7 +28,7 @@ namespace CorePowerYoges.BLL
             return string.Format("DailyScheduleBL-{0}", key);
         }
 
-        public DailySchedule GetDailyScheduleForLocation(DateTime date, Location location)
+        public DailySchedule GetDailyScheduleByLocation(DateTime date, Location location)
         {
             string key = string.Format("{0}-{1}-{2}", 
                 "DailyScheduleForLocation", 
@@ -41,7 +41,7 @@ namespace CorePowerYoges.BLL
             if (dailyScheduleFromCache == null)
             {
                 // no data in cache, load data externally
-                dailyScheduleFromCache = dailyScheduleDA.GetDailyScheduleByStateAndLocation(date,
+                dailyScheduleFromCache = dailyScheduleDA.GetDailyScheduleByStateIdAndLocationId(date,
                     location.State.Id,
                     location.Id);
 

@@ -35,7 +35,7 @@ namespace CorePowerYoges.DAL
         /// <param name="stateId">the stateId of the desired Daily Schedule</param>
         /// <param name="locationId">the locationId of the desired Daily Schedule</param>
         /// <returns>A Daily Schedule for a Location on a given date</returns>
-        public DailySchedule GetDailyScheduleByStateAndLocation(DateTime date, string stateId, string locationId)
+        public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
             var schedule = new DailySchedule(date.Date);
             var url = string.Format(urlBaseFormatString, 
