@@ -24,19 +24,23 @@ namespace CorePowerYoges.BLL
 
         public IEnumerable<Location> GetAllLocations()
         {
-            string allLocationsCacheKey = "LocationBL-AllLocations";
-            IEnumerable<Location> allLocationsFromCache = (IEnumerable<Location>)cache.Get(allLocationsCacheKey);
+            string cacheKey = "LocationBL-AllLocations";
+            IEnumerable<Location> dataFromCache = (IEnumerable<Location>)cache.Get(cacheKey);
 
-            if (allLocationsFromCache == null)
+            if (dataFromCache == null)
             {
                 // no data in cache, reload from Data Access Layer
-                allLocationsFromCache = locationDA.GetAllLocations();
+                dataFromCache = locationDA.GetAllLocations();
 
                 // insert item into cache
-                cache.Insert(allLocationsCacheKey, allLocationsFromCache, null, DateTime.Now.AddMinutes(allLocationCacheDurationInMinutes), Cache.NoSlidingExpiration);
+                cache.Insert(cacheKey, 
+                    dataFromCache, 
+                    null, 
+                    DateTime.Now.AddMinutes(allLocationCacheDurationInMinutes), 
+                    Cache.NoSlidingExpiration);
             }
 
-            return allLocationsFromCache;
+            return dataFromCache;
         }        
 
         public Location GetLocationById(string id)
@@ -46,22 +50,8 @@ namespace CorePowerYoges.BLL
 
         public IEnumerable<Location> GetAllLocationsInState(State state)
         {
-            return GetAllLocations().Where(l => l.State == state).OrderBy(l => l.Name);
-        }
-
-        public IEnumerable<Location> GetAllLocationsInStateByStateId(string stateId)
-        {
-            return GetAllLocations().Where(l => l.State.Id == stateId).OrderBy(l => l.Name);
-        }
-
-        public IEnumerable<Location> GetAllLocationsInStateByStateAbbreviation(string stateAbbr)
-        {
-            return GetAllLocations().Where(l => l.State.Abbreviation == stateAbbr.ToUpper()).OrderBy(l => l.Name);
-        }
-
-        public IEnumerable<State> GetAllStatesContainingLocations()
-        {
-            return GetAllLocations().Select(l => l.State).Distinct().OrderBy(s => s.Name);
+            return locationDA.GetAllLocations()
+                .Where(l => l.StateId == state.Id).OrderBy(l => l.Name);
         }
     }
 }

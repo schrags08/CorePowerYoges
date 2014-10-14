@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.DAL
 {
-    public interface ILocationDA
+    public interface IStateDA
     {
-        IEnumerable<Location> GetAllLocations();
         IEnumerable<State> GetAllStates();
     }
 }
