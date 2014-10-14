@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationHelpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,13 +61,17 @@
       <Project>{f7c7e5db-9600-4627-8acb-70ab8902d84e}</Project>
       <Name>CorePowerYoges.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CorePowerYoges.DAL\CorePowerYoges.DAL.csproj">
+      <Project>{1dd52f56-14f0-4e7d-b7d1-d02e1c814cc2}</Project>
+      <Name>CorePowerYoges.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CorePowerYoges.Models\CorePowerYoges.Models.csproj">
       <Project>{27af592f-0d5b-4da4-a43e-3cb0a0476df5}</Project>
       <Name>CorePowerYoges.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CorePowerYoges.Scraper\CorePowerYoges.Scraper.csproj">
-      <Project>{53e0ea7f-23c8-4c35-b419-32e12cfb16b8}</Project>
-      <Name>CorePowerYoges.Scraper</Name>
+    <ProjectReference Include="..\CorePowerYoges.Util\CorePowerYoges.Util.csproj">
+      <Project>{2d35879d-086d-4758-9e45-888d01f0f221}</Project>
+      <Name>CorePowerYoges.Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

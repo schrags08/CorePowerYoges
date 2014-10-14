@@ -9,21 +9,21 @@ using System.Xml.Linq;
 
 namespace CorePowerYoges.DAL
 {
-    public class LocationDA : ILocationDA
+    public class LocationFromDiskLoader : ILocationDA
     {
-        public LocationDA()
+        private string locationListPath;
+
+        public LocationFromDiskLoader(string locationListPath)
         {
+            this.locationListPath = locationListPath;
         }
 
-        public List<Location> GetAllLocations()
+        public IEnumerable<Location> GetAllLocations()
         {
-            // TODO replace with external value
-            string locationListPath = @"C:\Users\Matthew\GitProjects\CorePowerYoges\CorePowerYoges\CorePowerYoges.DAL\Data\LocationList.xml";
-
             return LoadLocationsFromDisk(locationListPath); 
         }
 
-        private List<Location> LoadLocationsFromDisk(string filename)
+        private IEnumerable<Location> LoadLocationsFromDisk(string filename)
         {
             List<Location> locations = new List<Location>();
             if (File.Exists(filename))

@@ -9,6 +9,6 @@ namespace CorePowerYoges.DAL
 {
     public interface ILocationDA
     {
-        List<Location> GetAllLocations();
+        IEnumerable<Location> GetAllLocations();
     }
 }

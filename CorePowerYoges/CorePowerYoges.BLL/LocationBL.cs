@@ -12,61 +12,58 @@ namespace CorePowerYoges.BLL
 {
     public class LocationBL
     {
-        protected Cache cache = HttpRuntime.Cache;
-        protected List<Location> AllLocations
+        private Cache cache = HttpRuntime.Cache;
+        private ILocationDA locationDA;
+        private int allLocationCacheDurationInMinutes;
+
+        public LocationBL(ILocationDA locationDA, int allLocationCacheDurationInMinutes = 1440)
         {
-            get
+            this.locationDA = locationDA;
+            this.allLocationCacheDurationInMinutes = allLocationCacheDurationInMinutes;
+        }
+
+        public IEnumerable<Location> GetAllLocations()
+        {
+            string allLocationsCacheKey = "LocationBL.AllLocations";
+            IEnumerable<Location> allLocationsFromCache = (IEnumerable<Location>)cache.Get(allLocationsCacheKey);
+
+            if (allLocationsFromCache == null)
             {
-                string locationsCacheKey = "LocationBL.AllLocations";
-                List<Location> allLocationsFromCache = (List<Location>)cache.Get(locationsCacheKey);
-                if (allLocationsFromCache == null)
-                {
-                    // no data in cache, reload from Data Access Layer
-                    ILocationDA locationDA = new LocationDA();
-                    allLocationsFromCache = locationDA.GetAllLocations();
+                // no data in cache, reload from Data Access Layer
+                allLocationsFromCache = locationDA.GetAllLocations();
 
-                    // insert item into cache for 1 day
-                    // TODO externalize cache expiration time
-                    cache.Insert(locationsCacheKey, allLocationsFromCache, null, DateTime.Now.AddMinutes(1440), Cache.NoSlidingExpiration);
-                }
-                return allLocationsFromCache;
+                // insert item into cache
+                cache.Insert(allLocationsCacheKey, allLocationsFromCache, null, DateTime.Now.AddMinutes(allLocationCacheDurationInMinutes), Cache.NoSlidingExpiration);
             }
+
+            return allLocationsFromCache;
         }
 
-        public LocationBL()
+        public IEnumerable<Location> GetLocationsInState(State state)
         {
+            return GetAllLocations().Where(l => l.State == state);
         }
 
-        public List<Location> GetAllLocations()
+        public IEnumerable<Location> GetLocationsInState(string stateAbbr)
         {
-            return AllLocations;
-        }
-
-        public List<Location> GetLocationsInState(State state)
-        {
-            return AllLocations.Where(l => l.State == state).ToList();
-        }
-
-        public List<Location> GetLocationsInState(string stateAbbr)
-        {
-            return AllLocations.Where(l => l.State.Abbreviation == stateAbbr.ToUpper()).ToList();
+            return GetAllLocations().Where(l => l.State.Abbreviation == stateAbbr.ToUpper());
         }
 
         public Location GetLocationById(string id)
         {
-            return AllLocations.Where(l => l.Id == id).FirstOrDefault();
+            return GetAllLocations().Where(l => l.Id == id).FirstOrDefault();
         }
 
         /// <summary>
-        /// Gets the first Location via its Id property.
+        /// Gets a Location's Name via its Id property.
         /// </summary>
         /// <param name="id">The Id of the Location you're looking for</param>
         /// <returns>The Name of the Location or an empty string if there was no match.</returns>
         public string GetLocationNameById(string id)
         {
-            var location = AllLocations.FirstOrDefault(l => l.Id == id);
             var name = string.Empty;
-            
+            var location = GetAllLocations().FirstOrDefault(l => l.Id == id);
+
             if (location != null)
             {
                 name = location.Name;

@@ -13,51 +13,46 @@ namespace CorePowerYoges.BLL
 {
     public class DailyScheduleBL
     {
-        protected Cache cache = HttpRuntime.Cache;        
+        private Cache cache = HttpRuntime.Cache;
+        private IDailyScheduleDA dailyScheduleDA;
+        private int dailyScheduleForLocationCacheDurationInMinutes;
 
-        public string ScraperUrlBase { get; set; }
-        public string ScraperUrlQueryString { get; set; }
-        public string ScraperUrlShortDateFormat { get; set; }
-        public int ScraperCacheDurationInMinutes { get; set; }
-
-        public DailyScheduleBL(string scraperUrlBase,
-            string scraperUrlQueryString,
-            string scraperUrlShortDateFormat,
-            int scraperCacheDurationInMinutes = 720)
+        public DailyScheduleBL(IDailyScheduleDA DailyScheduleDA, int DailyScheduleForLocationCacheDurationInMinutes = 720)
         {
-            this.ScraperUrlBase = scraperUrlBase;
-            this.ScraperUrlQueryString = scraperUrlQueryString;
-            this.ScraperUrlShortDateFormat = scraperUrlShortDateFormat;
-            this.ScraperCacheDurationInMinutes = scraperCacheDurationInMinutes;
+            this.dailyScheduleDA = DailyScheduleDA;
+            this.dailyScheduleForLocationCacheDurationInMinutes = DailyScheduleForLocationCacheDurationInMinutes;
         }
 
-        private string GetCacheKey(string key)
+        private string GenerateCacheKey(string key)
         {
-            return string.Format("DailyScheduleBL.{0}", key);
+            return string.Format("DailyScheduleBL-{0}", key);
         }
 
         public DailySchedule GetDailyScheduleForLocation(DateTime date, Location location)
         {
-            string stateId = location.State.Id;
-            string locationId = location.Id;
-            string cacheKey = GetCacheKey(locationId);
+            string key = string.Format("{0}-{1}-{2}", 
+                "DailyScheduleForLocation", 
+                location.Id, 
+                date.ToShortDateString().Replace("/", ""));
 
+            string cacheKey = GenerateCacheKey(key);
             DailySchedule dailyScheduleFromCache = (DailySchedule)cache.Get(cacheKey);
+
             if (dailyScheduleFromCache == null)
             {
-                IDailyScheduleDA dailyScheduleDA = new CorePowerWebsiteScraper(this.ScraperUrlBase,
-                    this.ScraperUrlQueryString, this.ScraperUrlShortDateFormat);
-
                 // no data in cache, load data externally
-                dailyScheduleFromCache = dailyScheduleDA.GetDailyScheduleByStateAndLocation(date, stateId, locationId);
+                dailyScheduleFromCache = dailyScheduleDA.GetDailyScheduleByStateAndLocation(date,
+                    location.State.Id,
+                    location.Id);
 
                 // add data to cache
                 cache.Insert(cacheKey, 
                     dailyScheduleFromCache, 
                     null,
-                    DateTime.Now.AddMinutes(this.ScraperCacheDurationInMinutes), 
+                    DateTime.Now.AddMinutes(dailyScheduleForLocationCacheDurationInMinutes), 
                     Cache.NoSlidingExpiration);
             }
+
             return dailyScheduleFromCache;
         }
     }

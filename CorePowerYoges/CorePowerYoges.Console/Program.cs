@@ -1,4 +1,5 @@
 ﻿using CorePowerYoges.BLL;
+using CorePowerYoges.DAL;
 using CorePowerYoges.Models;
 using CorePowerYoges.Util;
 using System;
@@ -21,22 +22,27 @@ namespace CorePowerYoges.ConsoleTester
 
             PrintAllStatesWithLocations();
 
-            PrintAllLocationsInState("IL");
+            PrintAllLocationsInState("MN");
 
             PrintDailyScheduleForLocation(DateTime.Now, "864_3");
 
             PrintDailyScheduleForLocation(DateTime.Now, "864_3");
+
+            //PrintDailyScheduleForLocation(DateTime.Now.AddDays(1), "864_3");
 
             Console.ReadLine();
         }
 
         private static void Init()
         {
-            blLocation = new LocationBL();
-            blDailySchedule = new DailyScheduleBL(ConfigurationHelpers.ScraperUrlBase,
-                ConfigurationHelpers.ScraperUrlQueryString,
-                ConfigurationHelpers.ScraperUrlShortDateFormat,
-                ConfigurationHelpers.ScraperCacheDurationInMinutes);
+            var locationFromDiskLoader = new LocationFromDiskLoader(ConfigurationHelpers.LocationListPath);
+            blLocation = new LocationBL(locationFromDiskLoader,
+                ConfigurationHelpers.AllLocationCacheDurationInMinutes);
+
+            var websiteScraper = new CorePowerWebsiteScraper(ConfigurationHelpers.WebsiteScraperUrlBaseFormatString,
+                ConfigurationHelpers.WebsiteScraperUrlShortDateFormat);            
+            blDailySchedule = new DailyScheduleBL(websiteScraper, 
+                ConfigurationHelpers.DailyScheduleForLocationCacheDurationInMinutes);
         }
 
         private static void PrintDailyScheduleForLocation(DateTime dateTime, string locationId)
@@ -44,7 +50,12 @@ namespace CorePowerYoges.ConsoleTester
             var location = blLocation.GetLocationById(locationId);
             var dailySchedule = blDailySchedule.GetDailyScheduleForLocation(dateTime, location);
 
-            //throw new NotImplementedException();
+            Console.WriteLine(string.Format("{0}: ", location.Name));
+
+            foreach (Session session in dailySchedule.Sessions)
+            {
+                Console.WriteLine(string.Format("{0} ({1})", session.Name, session.Teacher));
+            }
         }
 
         private static void PrintAllLocationsInState(string stateAbbr)
@@ -67,7 +78,7 @@ namespace CorePowerYoges.ConsoleTester
             var locations = blLocation.GetAllLocations();
             var states = locations.Select(l => l.State).Distinct();
 
-            foreach (State s in locations.Select(l => l.State).Distinct())
+            foreach (State s in states)
             {
                 Console.WriteLine(string.Format("{0} ({1}) - {2}",
                     s.Name,
