@@ -37,7 +37,7 @@ namespace CorePowerYoges.DAL
         /// <returns>A Daily Schedule for a Location on a given date</returns>
         public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
-            var schedule = new DailySchedule(date.Date);
+            var schedule = new DailySchedule(date.Date, locationId);
             var url = string.Format(urlBaseFormatString, 
                 stateId,
                 locationId,
@@ -62,20 +62,19 @@ namespace CorePowerYoges.DAL
 
                     foreach (HtmlNode node in rawClasses)
                     {
-                        var session = new Session();
+                        var startTimeElement = node.Descendants("span").Where(s => ClassAttributeContainsString(s, "hc_starttime")).FirstOrDefault();
+                        var startTime = GetDateTime(date, RemoveUnwantedCharactersFromNode(startTimeElement));
 
-                        var startTime = node.Descendants("span").Where(s => ClassAttributeContainsString(s, "hc_starttime")).FirstOrDefault();
-                        session.StartTime = GetDateTime(date, RemoveUnwantedCharactersFromNode(startTime));
+                        var endTimeElement = node.Descendants("span").Where(s => ClassAttributeContainsString(s, "hc_endtime")).FirstOrDefault();
+                        var endTime = GetDateTime(date, RemoveUnwantedCharactersFromNode(endTimeElement));
 
-                        var endTime = node.Descendants("span").Where(s => ClassAttributeContainsString(s, "hc_endtime")).FirstOrDefault();
-                        session.EndTime = GetDateTime(date, RemoveUnwantedCharactersFromNode(endTime));
+                        var nameElement = node.Descendants("td").Where(s => ClassAttributeContainsString(s, "mbo_class")).FirstOrDefault();
+                        var name = nameElement.InnerText.Trim().Replace("???", "-");
 
-                        var name = node.Descendants("td").Where(s => ClassAttributeContainsString(s, "mbo_class")).FirstOrDefault();
-                        session.Name = name.InnerText.Trim().Replace("???", "-");
+                        var teacherElement = node.Descendants("td").Where(s => ClassAttributeContainsString(s, "trainer")).FirstOrDefault();
+                        var teacher = teacherElement.InnerText.Trim();
 
-                        var teacher = node.Descendants("td").Where(s => ClassAttributeContainsString(s, "trainer")).FirstOrDefault();
-                        session.Teacher = teacher.InnerText.Trim();
-
+                        var session = new Session(startTime, endTime, name, teacher, locationId);
                         schedule.Sessions.Add(session);
                     }
                 }

@@ -11,19 +11,17 @@ namespace CorePowerYoges.Models
     /// </summary>
     public class State
     {
-        public string Id { get; set; }
-        public string Abbreviation { get; set; }
-        public string Name { get; set; }
-
-        public State()
-        {
-        }
+        public string Id { get; private set; }
+        public string Abbreviation { get; private set; }
+        public string Name { get; private set; }
+        public List<Location> Locations { get; set; }
 
         public State(string abbreviation, string name, string id)
         {
             this.Abbreviation = abbreviation;
             this.Name = name;
             this.Id = id;
+            this.Locations = new List<Location>();
         }
     }
 }

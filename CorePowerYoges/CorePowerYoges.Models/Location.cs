@@ -12,19 +12,15 @@ namespace CorePowerYoges.Models
     /// </summary>
     public class Location
     {
-        public string Name { get; set; }
-        public string Id { get; set; }
-        public State State { get; set; }
+        public string Name { get; private set; }
+        public string Id { get; private set; }
+        public string StateId { get; private set; }
 
-        public Location()
-        {
-        }
-
-        public Location(string name, string id, State state)
+        public Location(string name, string id, string stateId)
         {
             this.Name = name;
             this.Id = id;
-            this.State = state;
+            this.StateId = stateId;
         }
     }
 }

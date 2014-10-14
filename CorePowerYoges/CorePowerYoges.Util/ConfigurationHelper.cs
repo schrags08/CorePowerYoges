@@ -59,6 +59,14 @@ namespace CorePowerYoges.Util
             }
         }
 
+        public static int AllStateCacheDurationInMinutes
+        {
+            get
+            {
+                return GetConfigurationIntValueByKey("AllStateCacheDurationInMinutes");
+            }
+        }
+
         public static string LocationListPath
         {
             get
