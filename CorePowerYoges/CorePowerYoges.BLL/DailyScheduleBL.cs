@@ -17,10 +17,10 @@ namespace CorePowerYoges.BLL
         private IDailyScheduleDA dailyScheduleDA;
         private int dailyScheduleForLocationCacheDurationInMinutes;
 
-        public DailyScheduleBL(IDailyScheduleDA DailyScheduleDA, int DailyScheduleForLocationCacheDurationInMinutes = 720)
+        public DailyScheduleBL(IDailyScheduleDA dailyScheduleDA, int dailyScheduleForLocationCacheDurationInMinutes = 720)
         {
-            this.dailyScheduleDA = DailyScheduleDA;
-            this.dailyScheduleForLocationCacheDurationInMinutes = DailyScheduleForLocationCacheDurationInMinutes;
+            this.dailyScheduleDA = dailyScheduleDA;
+            this.dailyScheduleForLocationCacheDurationInMinutes = dailyScheduleForLocationCacheDurationInMinutes;
         }
 
         private string GenerateCacheKey(string key)

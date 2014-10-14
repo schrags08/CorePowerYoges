@@ -63,18 +63,5 @@ namespace CorePowerYoges.BLL
         {
             return GetAllLocations().Select(l => l.State).Distinct().OrderBy(s => s.Name);
         }
-
-        public string GetLocationNameById(string id)
-        {
-            var name = string.Empty;
-            var location = GetAllLocations().FirstOrDefault(l => l.Id == id);
-
-            if (location != null)
-            {
-                name = location.Name;
-            }
-
-            return name;
-        }
     }
 }

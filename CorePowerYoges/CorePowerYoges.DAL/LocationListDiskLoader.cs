@@ -18,7 +18,7 @@ namespace CorePowerYoges.DAL
             this.locationListPath = locationListPath;
         }
 
-        private IEnumerable<Location> LoadLocationsFromDisk(string filename)
+        private IEnumerable<Location> LoadLocationListFromDisk(string filename)
         {
             List<Location> locations = new List<Location>();
             if (File.Exists(filename))
@@ -48,7 +48,7 @@ namespace CorePowerYoges.DAL
             }
             else
             {
-                throw new FileNotFoundException();
+                throw new FileNotFoundException("LocationList File Not Found", filename);
             }
 
             return locations;
@@ -56,7 +56,7 @@ namespace CorePowerYoges.DAL
 
         public IEnumerable<Location> GetAllLocations()
         {
-            return LoadLocationsFromDisk(locationListPath).OrderBy(l => l.Name);
+            return LoadLocationListFromDisk(locationListPath).OrderBy(l => l.Name);
         }
     }
 }
