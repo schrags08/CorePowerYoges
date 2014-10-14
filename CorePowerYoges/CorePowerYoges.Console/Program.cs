@@ -43,7 +43,7 @@ namespace CorePowerYoges.ConsoleTester
 
         private static void Init()
         {
-            var locationListFromDiskLoader = new LocationListFromDiskLoader(ConfigurationHelpers.LocationListPath);
+            var locationListFromDiskLoader = new LocationListDiskLoader(ConfigurationHelpers.LocationListPath);
             blLocation = new LocationBL(locationListFromDiskLoader,
                 ConfigurationHelpers.AllLocationCacheDurationInMinutes);
 

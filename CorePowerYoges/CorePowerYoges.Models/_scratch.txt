@@ -64,7 +64,7 @@ app will feature landing page with list of users favorites
 
 			
 		you can have a maximum of 20 favorites?
-		favorites will be loaded from local storage on phone
+		favorites will be loaded from local storage on phone (OneDrive??)
 			if no favorites are set, a message to add favorites should be shown
 		to retrieve favorites summary, a call to GetLocationSummaryByIds(string[] ids)
 

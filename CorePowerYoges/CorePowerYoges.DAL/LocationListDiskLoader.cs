@@ -9,11 +9,11 @@ using System.Xml.Linq;
 
 namespace CorePowerYoges.DAL
 {
-    public class LocationListFromDiskLoader : ILocationDA
+    public class LocationListDiskLoader : ILocationDA
     {
         private string locationListPath;
 
-        public LocationListFromDiskLoader(string locationListPath)
+        public LocationListDiskLoader(string locationListPath)
         {
             this.locationListPath = locationListPath;
         }
