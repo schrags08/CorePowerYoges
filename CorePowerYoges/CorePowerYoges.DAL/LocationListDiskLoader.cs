@@ -10,7 +10,7 @@ using System.Xml.Linq;
 namespace CorePowerYoges.DAL
 {
     // TODO: replace with DB
-    public class LocationListDiskLoader : ILocationDA, IStateDA
+    public class LocationListDiskLoader : ILocationDA
     {
         private string locationListPath;
 

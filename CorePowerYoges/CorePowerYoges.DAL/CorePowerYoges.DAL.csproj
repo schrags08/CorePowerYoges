@@ -51,7 +51,6 @@
     <Compile Include="CorePowerWebsiteScraper.cs" />
     <Compile Include="IDailyScheduleDA.cs" />
     <Compile Include="ILocationDA.cs" />
-    <Compile Include="IStateDA.cs" />
     <Compile Include="LocationListDiskLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
