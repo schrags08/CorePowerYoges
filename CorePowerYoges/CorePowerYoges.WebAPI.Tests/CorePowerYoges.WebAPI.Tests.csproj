@@ -105,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CorePowerYoges.WebAPI\CorePowerYoges.WebAPI.csproj">
-      <Project>{F6F6D6C3-0B67-45ED-A0A9-D1E104266EDF}</Project>
+      <Project>{f6f6d6c3-0b67-45ed-a0a9-d1e104266edf}</Project>
       <Name>CorePowerYoges.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>

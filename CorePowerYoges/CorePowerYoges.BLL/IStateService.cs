@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorePowerYoges.DAL
+namespace CorePowerYoges.BLL
 {
-    public interface ILocationDA
+    public interface IStateService
     {
-        IEnumerable<Location> GetAllLocations();
         IEnumerable<State> GetAllStates();
+		State GetStateById(string id);
+        State GetStateByAbbreviation(string stateAbbr);
+        Location GetLocationById(string id);
     }
 }

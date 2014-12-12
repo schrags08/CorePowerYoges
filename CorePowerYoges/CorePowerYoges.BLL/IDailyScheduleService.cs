@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorePowerYoges.DAL
+namespace CorePowerYoges.BLL
 {
-    public interface IDailyScheduleDA
+    public interface IDailyScheduleService
     {
         DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId);
     }

@@ -13,7 +13,7 @@ namespace CorePowerYoges.DAL
     /// <summary>
     /// Scrapes the CPY website at www.corepoweryoga.com, caching should be handled externally.
     /// </summary>
-    public class CorePowerWebsiteScraper : IDailyScheduleDA
+    public class CorePowerWebsiteScraper : IDailyScheduleRepository
     {
         private string urlBaseFormatString { get; set; }
         private string urlShortDateFormat { get; set; }

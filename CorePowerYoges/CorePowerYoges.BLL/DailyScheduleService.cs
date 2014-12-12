@@ -11,28 +11,29 @@ using System.Web.Caching;
 
 namespace CorePowerYoges.BLL
 {
-    public class DailyScheduleBL
+    public class DailyScheduleService : IDailyScheduleService
     {
         private Cache cache = HttpRuntime.Cache;
-        private IDailyScheduleDA dailyScheduleDA;
+        private IDailyScheduleRepository _dailyScheduleRepository;
         private int dailyScheduleForLocationCacheDurationInMinutes;
 
-        public DailyScheduleBL(IDailyScheduleDA dailyScheduleDA, int dailyScheduleForLocationCacheDurationInMinutes = 720)
+        public DailyScheduleService(IDailyScheduleRepository dailyScheduleRepository, 
+            int dailyScheduleForLocationCacheDurationInMinutes = 720)
         {
-            this.dailyScheduleDA = dailyScheduleDA;
+            this._dailyScheduleRepository = dailyScheduleRepository;
             this.dailyScheduleForLocationCacheDurationInMinutes = dailyScheduleForLocationCacheDurationInMinutes;
         }
 
         private string GenerateCacheKey(string key)
         {
-            return string.Format("DailyScheduleBL-{0}", key);
+            return string.Format("DailyScheduleService-{0}", key);
         }
 
-        public DailySchedule GetDailyScheduleByDateAndLocation(DateTime date, Location location)
+        public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
             string key = string.Format("{0}-{1}-{2}", 
                 "DailyScheduleForLocation", 
-                location.Id, 
+                locationId, 
                 date.ToShortDateString().Replace("/", ""));
 
             string cacheKey = GenerateCacheKey(key);
@@ -41,9 +42,9 @@ namespace CorePowerYoges.BLL
             if (dailyScheduleFromCache == null)
             {
                 // no data in cache, load data externally
-                dailyScheduleFromCache = dailyScheduleDA.GetDailyScheduleByStateIdAndLocationId(date,
-                    location.StateId,
-                    location.Id);
+                dailyScheduleFromCache = _dailyScheduleRepository.GetDailyScheduleByStateIdAndLocationId(date,
+                    stateId,
+                    locationId);
 
                 // add data to cache
                 cache.Insert(cacheKey, 

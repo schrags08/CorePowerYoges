@@ -10,27 +10,28 @@ using System.Web.Caching;
 
 namespace CorePowerYoges.BLL
 {
-    public class StateBL
+    public class StateService : IStateService
     {
         private Cache cache = HttpRuntime.Cache;
-        private ILocationDA locationDA;
+        private IStateRepository _stateRepository;
         private int allStateCacheDurationInMinutes;
 
-        public StateBL(ILocationDA locationDA, int allStateCacheDurationInMinutes = 1440)
+        public StateService(IStateRepository stateRepository,
+            int allStateCacheDurationInMinutes = 1440)
         {
-            this.locationDA = locationDA;
+            this._stateRepository = stateRepository;
             this.allStateCacheDurationInMinutes = allStateCacheDurationInMinutes;
         }
 
         public IEnumerable<State> GetAllStates()
         {
-            string cacheKey = "StateBL-AllStates";
+            string cacheKey = "StateService-AllStates";
             IEnumerable<State> dataFromCache = (IEnumerable<State>)cache.Get(cacheKey);
 
             if (dataFromCache == null)
             {
                 // no data in cache, reload from Data Access Layer
-                dataFromCache = locationDA.GetAllStates();
+                dataFromCache = _stateRepository.GetAllStates();
 
                 // insert item into cache
                 cache.Insert(cacheKey, 
@@ -53,6 +54,13 @@ namespace CorePowerYoges.BLL
         {
             return GetAllStates()
                 .Where(s => s.Abbreviation == stateAbbr.ToUpper()).FirstOrDefault();
-        }    
+        }
+
+        public Location GetLocationById(string id)
+        {
+            return GetAllStates().SelectMany(s => s.Locations).FirstOrDefault(l => l.Id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        //will we need a GetLocationByIds?
     }
 }

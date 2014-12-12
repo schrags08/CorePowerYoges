@@ -13,9 +13,9 @@ namespace CorePowerYoges.ConsoleTester
 {
     class Program
     {
-        private static StateBL blState;
-        private static LocationBL blLocation;
-        private static DailyScheduleBL blDailySchedule;
+        private static StateService blState;
+        //private static LocationService blLocation;
+        private static DailyScheduleService blDailySchedule;
 
         static void Main(string[] args)
         {
@@ -44,15 +44,15 @@ namespace CorePowerYoges.ConsoleTester
 
         private static void Init()
         {
-            var locationListFromDiskLoader = new LocationListDiskLoader(ConfigurationHelpers.LocationListPath);
-            blLocation = new LocationBL(locationListFromDiskLoader,
+            var locationListFromDiskLoader = new StateListDiskLoader(ConfigurationHelpers.LocationListPath);
+            blLocation = new LocationService(locationListFromDiskLoader,
                 ConfigurationHelpers.AllLocationCacheDurationInMinutes);
-            blState = new StateBL(locationListFromDiskLoader,
+            blState = new StateService(locationListFromDiskLoader,
                 ConfigurationHelpers.AllStateCacheDurationInMinutes);
 
             var websiteScraper = new CorePowerWebsiteScraper(ConfigurationHelpers.WebsiteScraperUrlBaseFormatString,
                 ConfigurationHelpers.WebsiteScraperUrlShortDateFormat);            
-            blDailySchedule = new DailyScheduleBL(websiteScraper, 
+            blDailySchedule = new DailyScheduleService(websiteScraper, 
                 ConfigurationHelpers.DailyScheduleForLocationCacheDurationInMinutes);
         }
 

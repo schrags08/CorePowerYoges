@@ -38,6 +38,12 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.3.0.0.108\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap.3.0.0.108\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -49,9 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CorePowerWebsiteScraper.cs" />
-    <Compile Include="IDailyScheduleDA.cs" />
-    <Compile Include="ILocationDA.cs" />
-    <Compile Include="LocationListDiskLoader.cs" />
+    <Compile Include="IDailyScheduleRepository.cs" />
+    <Compile Include="IStateRepository.cs" />
+    <Compile Include="StateListDiskLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,7 +67,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\LocationList.xml" />
+    <Content Include="Data\StateList.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

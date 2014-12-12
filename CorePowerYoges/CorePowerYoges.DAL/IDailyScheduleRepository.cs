@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.DAL
 {
-    public interface IStateDA
+    public interface IDailyScheduleRepository
     {
-        IEnumerable<State> GetAllStates();
+        DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId);
     }
 }
