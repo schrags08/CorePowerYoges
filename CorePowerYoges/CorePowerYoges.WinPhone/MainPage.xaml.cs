@@ -12,6 +12,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Threading.Tasks;
+using Windows.Storage;
+using CorePowerYoges.WinPhone.Utils;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -43,6 +48,58 @@ namespace CorePowerYoges.WinPhone
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
+
+            this.txtInput.Text = "{ 'settings': { 'favoriteLocations': [ '864_16', '864_15', '864_17', '864_7', '110_6', '110_5'] } }";
+            LocalSettingsHelper.AddSetting("userData", txtInput.Text);
+
+            LoadFavorites();
+        }
+
+        private void LoadFavorites()
+        {
+            var jim = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
+            var favoriteLocations = (JArray)jim.SelectToken("settings.favoriteLocations");
+            var currentFavorites = new List<string>();
+
+            if (favoriteLocations != null && favoriteLocations.Count() > 0)
+            {
+                foreach (JValue location in favoriteLocations)
+                {
+                    var name = location.Value as string;
+                    currentFavorites.Add(name);
+                }
+            }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            //StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+            //localSettings.Values["userData"] = txtInput.Text;
+
+            LocalSettingsHelper.AddSetting("userData", txtInput.Text);
+        }
+
+        private void btnDisplay_Click(object sender, RoutedEventArgs e)
+        {
+            // txtDisplay is a TextBlock defined in XAML.
+            txtDisplay.Text = "USER DATA: ";
+
+            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            //Object value = localSettings.Values["userData"];
+
+            var value = LocalSettingsHelper.GetSetting("userData");
+
+            txtDisplay.Text += value as string;
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            //localSettings.Values.Remove("userData");
+
+            LocalSettingsHelper.RemoveSetting("userData");
         }
     }
 }

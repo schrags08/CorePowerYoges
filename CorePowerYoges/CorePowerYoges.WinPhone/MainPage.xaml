@@ -8,7 +8,19 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <!--ContentPanel - place additional content here-->
+    <!--ContentPanel - place additional content here-->
+    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <TextBox Height="72" HorizontalAlignment="Left" Margin="12,6,0,0" Name="txtInput" 
+      Text="INPUT DATA" VerticalAlignment="Top" Width="438" />
+        <Button Content="Save Data" Height="72" HorizontalAlignment="Left" Margin="125,84,0,0" 
+      Name="btnSave" VerticalAlignment="Top" Width="216" Click="btnSave_Click" />
+        <Button Content="Display Data" Height="72" HorizontalAlignment="Left" Margin="125,174,0,0" 
+      Name="btnDisplay" VerticalAlignment="Top" Width="216" Click="btnDisplay_Click" />
+        <Button Content="Remove Data" Height="72" HorizontalAlignment="Left" Margin="125,266,0,0" 
+      Name="btnRemove" VerticalAlignment="Top" Width="216" Click="btnRemove_Click" />
 
+        <TextBlock Height="60" HorizontalAlignment="Left" Margin="25,422,0,0" Name="txtDisplay" 
+      Text="USER DATA:" VerticalAlignment="Top" Width="395" />
     </Grid>
 </Page>
