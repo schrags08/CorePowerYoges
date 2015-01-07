@@ -17,6 +17,9 @@ using Windows.Storage;
 using CorePowerYoges.WinPhone.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using CorePowerYoges.Models;
+using System.Collections.ObjectModel;
+using CorePowerYoges.WinPhone.Repository;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -55,7 +58,15 @@ namespace CorePowerYoges.WinPhone
             LoadFavorites();
         }
 
-        private void LoadFavorites()
+        private ObservableCollection<State> _allStates;
+
+        public async Task LoadAllStates()
+        {
+            IStateRepository repository = new StateRepository();
+            _allStates = await repository.GetAllStatesAsync();
+        }
+
+        private async void LoadFavorites()
         {
             var jim = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favoriteLocations = (JArray)jim.SelectToken("settings.favoriteLocations");
@@ -69,6 +80,8 @@ namespace CorePowerYoges.WinPhone
                     currentFavorites.Add(name);
                 }
             }
+
+            await LoadAllStates();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

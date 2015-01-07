@@ -19,38 +19,11 @@ namespace CorePowerYoges.DAL
             this.stateListPath = stateListPath;
         }
 
-        //private IEnumerable<Location> LoadLocationListFromDisk(string filename)
-        //{
-        //    List<Location> locations = new List<Location>();
-
-        //    if (File.Exists(filename))
-        //    {
-        //        XDocument locationList = XDocument.Load(filename);
-        //        foreach (XElement stateElem in locationList.Descendants("State"))
-        //        {
-        //            var stateId = stateElem.Attribute("id").Value;
-
-        //            foreach (XElement locationElem in stateElem.Descendants("Location"))
-        //            {
-        //                var name = locationElem.Attribute("name").Value;
-        //                var id = locationElem.Attribute("id").Value;
-        //                var location = new Location(name, id, stateId);
-
-        //                locations.Add(location);
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new FileNotFoundException("LocationList File Not Found", filename);
-        //    }
-
-        //    return locations;
-        //}
-
         private IEnumerable<State> LoadStateListFromDisk(string filename)
         {
             List<State> states = new List<State>();
+
+            filename = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, filename);
 
             if (File.Exists(filename))
             {
