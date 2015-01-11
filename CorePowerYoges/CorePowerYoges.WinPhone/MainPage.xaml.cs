@@ -20,6 +20,7 @@ using Newtonsoft.Json.Linq;
 using CorePowerYoges.Models;
 using System.Collections.ObjectModel;
 using CorePowerYoges.WinPhone.Repository;
+using Newtonsoft.Json.Converters;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -52,6 +53,11 @@ namespace CorePowerYoges.WinPhone
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
 
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter> { new JavaScriptDateTimeConverter() }
+            };
+
             this.txtInput.Text = "{ 'settings': { 'favoriteLocations': [ '864_16', '864_15', '864_17', '864_7', '110_6', '110_5'] } }";
             LocalSettingsHelper.AddSetting("userData", txtInput.Text);
 
@@ -64,6 +70,14 @@ namespace CorePowerYoges.WinPhone
         {
             IStateRepository repository = new StateRepository();
             _allStates = await repository.GetAllStatesAsync();
+        }
+
+        private DailySchedule _dailySchedule;
+
+        public async Task LoadDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
+        {
+            IDailyScheduleRepository repository = new DailyScheduleRepository();
+            _dailySchedule = await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
         }
 
         private async void LoadFavorites()
@@ -82,6 +96,8 @@ namespace CorePowerYoges.WinPhone
             }
 
             await LoadAllStates();
+
+            await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, "ec4baf3", "110_6");
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
