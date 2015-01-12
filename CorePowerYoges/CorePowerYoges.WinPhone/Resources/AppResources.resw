@@ -120,6 +120,12 @@
   <data name="AllStates" xml:space="preserve">
     <value>All States</value>
   </data>
+  <data name="ApiBaseUrl" xml:space="preserve">
+    <value>http://nagas.azurewebsites.net/</value>
+  </data>
+  <data name="DailyScheduleRequestUriFormat" xml:space="preserve">
+    <value>api/dailyschedule?date={0}&amp;stateId={1}&amp;locationId={2}</value>
+  </data>
   <data name="Favorites" xml:space="preserve">
     <value>Favorites</value>
   </data>
@@ -128,5 +134,8 @@
   </data>
   <data name="LoadingMessage" xml:space="preserve">
     <value>Hey, take a few deep breaths while I get the yoges, man...</value>
+  </data>
+  <data name="StateRequestUri" xml:space="preserve">
+    <value>api/state</value>
   </data>
 </root>

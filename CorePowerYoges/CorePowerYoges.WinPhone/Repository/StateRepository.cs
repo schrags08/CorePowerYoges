@@ -9,19 +9,17 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
+using CorePowerYoges.WinPhone.Utils;
 
 namespace CorePowerYoges.WinPhone.Repository
 {
     public class StateRepository : IStateRepository
     {
-        const string baseUrl = "http://api.nagas.co/";
-        const string requestUriFormat = "api/dailyschedules/{0}";
+        private readonly string baseUrl = AppResourcesHelper.GetValue("ApiBaseUrl");
 
         public async Task<ObservableCollection<State>> GetAllStatesAsync()
         {
-            //string baseUrl = "http://localhost/CorePowerYoges.WebAPI/";
-            string baseUrl = "http://nagas.azurewebsites.net/";
-            string requestUri = "api/state";
+            string requestUri = AppResourcesHelper.GetValue("StateRequestUri"); ;
 
             ObservableCollection<State> allStates = new ObservableCollection<State>();
 

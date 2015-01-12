@@ -80,7 +80,7 @@ namespace CorePowerYoges.WinPhone
             _dailySchedule = await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
         }
 
-        private async void LoadFavorites()
+        private async Task LoadFavorites()
         {
             var jim = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favoriteLocations = (JArray)jim.SelectToken("settings.favoriteLocations");
