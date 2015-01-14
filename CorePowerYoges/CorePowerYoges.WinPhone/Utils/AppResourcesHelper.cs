@@ -13,11 +13,11 @@ namespace CorePowerYoges.WinPhone.Utils
         private static ResourceMap _mainResourceMap = ResourceManager.Current.MainResourceMap;
         private static ResourceContext _resourceContext = ResourceContext.GetForCurrentView();
 
-        public static string GetValue(string key)
+        public static string GetValue(string key, string prefix = "AppResources")
         {
-            string keyFormat = "AppResources/{0}";
+            string keyFormat = "{0}/{1}";
 
-            var resource = _mainResourceMap.GetValue(string.Format(keyFormat, key), _resourceContext);
+            var resource = _mainResourceMap.GetValue(string.Format(keyFormat, prefix, key), _resourceContext);
             if (resource != null)
             {
                 return resource.ValueAsString;

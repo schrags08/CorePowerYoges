@@ -19,7 +19,7 @@ namespace CorePowerYoges.WinPhone.Repository
 
         public async Task<ObservableCollection<State>> GetAllStatesAsync()
         {
-            string requestUri = AppResourcesHelper.GetValue("StateRequestUri"); ;
+            string requestUri = AppResourcesHelper.GetValue("StateRequestUri");
 
             ObservableCollection<State> allStates = new ObservableCollection<State>();
 

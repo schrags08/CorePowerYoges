@@ -53,11 +53,6 @@ namespace CorePowerYoges.WinPhone
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
 
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                Converters = new List<JsonConverter> { new JavaScriptDateTimeConverter() }
-            };
-
             this.txtInput.Text = "{ 'settings': { 'favoriteLocations': [ '864_16', '864_15', '864_17', '864_7', '110_6', '110_5'] } }";
             LocalSettingsHelper.AddSetting("userData", txtInput.Text);
 
@@ -65,7 +60,6 @@ namespace CorePowerYoges.WinPhone
         }
 
         private ObservableCollection<State> _allStates;
-
         public async Task LoadAllStates()
         {
             IStateRepository repository = new StateRepository();
@@ -73,7 +67,6 @@ namespace CorePowerYoges.WinPhone
         }
 
         private DailySchedule _dailySchedule;
-
         public async Task LoadDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
             IDailyScheduleRepository repository = new DailyScheduleRepository();
@@ -96,7 +89,6 @@ namespace CorePowerYoges.WinPhone
             }
 
             await LoadAllStates();
-
             await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, "ec4baf3", "110_6");
         }
 
