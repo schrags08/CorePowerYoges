@@ -73,6 +73,13 @@ namespace CorePowerYoges.WinPhone
             _dailySchedule = await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
         }
 
+        private Location _location;
+        public async Task LoadLocationById(string locationId)
+        {
+            ILocationRepository repository = new LocationRepository();
+            _location = await repository.GetLocationByIdAsync(locationId);
+        }
+
         private async Task LoadFavorites()
         {
             var jim = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
@@ -88,8 +95,9 @@ namespace CorePowerYoges.WinPhone
                 }
             }
 
-            await LoadAllStates();
-            await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, "ec4baf3", "110_6");
+            //await LoadAllStates();
+            //await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, "ec4baf3", "110_6");
+            await LoadLocationById("110_6");
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

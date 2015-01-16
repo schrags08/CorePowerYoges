@@ -133,7 +133,10 @@
     <value>Let's Do Some Yoges</value>
   </data>
   <data name="LoadingMessage" xml:space="preserve">
-    <value>Hey, take a few deep breaths while I get the yoges, man...</value>
+    <value>Hey, breathe deep while I get the yoges, man...</value>
+  </data>
+  <data name="LocationRequestUri" xml:space="preserve">
+    <value>api/location/{0}</value>
   </data>
   <data name="StateRequestUri" xml:space="preserve">
     <value>api/state</value>
