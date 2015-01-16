@@ -61,6 +61,16 @@ namespace CorePowerYoges.BLL
             return GetAllStates().SelectMany(s => s.Locations).FirstOrDefault(l => l.Id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        //will we need a GetLocationByIds?
+        public IEnumerable<Location> GetLocationsByIds(string[] ids)
+        {
+            var locations = new List<Location>();
+
+            foreach (string id in ids)
+            {
+                locations.Add(GetLocationById(id));
+            }
+
+            return locations;
+        }
     }
 }

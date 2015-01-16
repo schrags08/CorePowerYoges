@@ -23,5 +23,10 @@ namespace CorePowerYoges.Models
             this.Id = id;
             this.Locations = new List<Location>();
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
