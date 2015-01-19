@@ -51,12 +51,9 @@ namespace CorePowerYoges.WinPhone
             // handling the hardware Back button by registering for the
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
-
-            //this.txtInput.Text = "{ 'settings': { 'favoriteLocations': [ '864_16', '864_15', '864_17', '864_7', '110_6', '110_5'] } }";
+            // this event is handled for you.            
 
             this.txtInput.Text = AppResourcesHelper.GetValue("SampleFavorites");
-
             LocalSettingsHelper.AddSetting("userData", txtInput.Text);
 
             var favorites = await LoadFavorites();
@@ -76,9 +73,9 @@ namespace CorePowerYoges.WinPhone
 
         private async Task<Dictionary<State2, List<Location2>>> LoadFavorites()
         {
-            var allStates = await LoadAllStates2();
             var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favorites = new Dictionary<State2, List<Location2>>();
+            var allStates = await LoadAllStates2();
 
             var states = (JArray)userData.SelectToken("favorites.states");
             if (states != null && states.Count() > 0)
@@ -128,11 +125,6 @@ namespace CorePowerYoges.WinPhone
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            //StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
-            //localSettings.Values["userData"] = txtInput.Text;
-
             LocalSettingsHelper.AddSetting("userData", txtInput.Text);
         }
 
@@ -141,19 +133,12 @@ namespace CorePowerYoges.WinPhone
             // txtDisplay is a TextBlock defined in XAML.
             txtDisplay.Text = "USER DATA: ";
 
-            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            //Object value = localSettings.Values["userData"];
-
             var value = LocalSettingsHelper.GetSetting("userData");
-
             txtDisplay.Text += value as string;
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            //localSettings.Values.Remove("userData");
-
             LocalSettingsHelper.RemoveSetting("userData");
         }
     }
