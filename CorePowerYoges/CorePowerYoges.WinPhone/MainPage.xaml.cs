@@ -56,7 +56,8 @@ namespace CorePowerYoges.WinPhone
             this.txtInput.Text = AppResourcesHelper.GetValue("SampleFavorites");
             LocalSettingsHelper.AddSetting("userData", txtInput.Text);
 
-            var favorites = await LoadFavorites();
+            var favorites = await LoadFavoritesAsync();
+            //await LoadAllSchedulesAsync(favorites);
         }       
 
         public async Task<ObservableCollection<State2>> LoadAllStates2()
@@ -71,7 +72,7 @@ namespace CorePowerYoges.WinPhone
             return await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
         }
 
-        private async Task<Dictionary<State2, List<Location2>>> LoadFavorites()
+        private async Task<Dictionary<State2, List<Location2>>> LoadFavoritesAsync()
         {
             var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favorites = new Dictionary<State2, List<Location2>>();
@@ -110,17 +111,20 @@ namespace CorePowerYoges.WinPhone
                 }
             }
 
-            return favorites;
+            return favorites;            
+        }
 
+        private async Task LoadAllSchedulesAsync(Dictionary<State2, List<Location2>> favorites)
+        {
             //test loading all schedules, we'd rather load on demand, however, to make everything speedier
-            //foreach (KeyValuePair<State2, List<Location2>> kvp in favorites)
-            //{
-            //    foreach (Location2 location in kvp.Value)
-            //    {
-            //        var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.Id);
-            //        location.DailySchedules.Add(dailySchedule);
-            //    }
-            //}
+            foreach (KeyValuePair<State2, List<Location2>> kvp in favorites)
+            {
+                foreach (Location2 location in kvp.Value)
+                {
+                    var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.Id);
+                    location.DailySchedules.Add(dailySchedule);
+                }
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

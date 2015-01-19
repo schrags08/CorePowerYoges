@@ -20,5 +20,10 @@ namespace CorePowerYoges.Models
             this.Name = name;
             this.Teacher = teacher;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
