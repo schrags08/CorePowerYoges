@@ -43,7 +43,7 @@ namespace CorePowerYoges.WinPhone
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.
         /// This parameter is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             // TODO: Prepare page for display here.
 
@@ -59,27 +59,24 @@ namespace CorePowerYoges.WinPhone
 
             LocalSettingsHelper.AddSetting("userData", txtInput.Text);
 
-            LoadFavorites();
+            var favorites = await LoadFavorites();
         }       
 
-        private ObservableCollection<State2> _allStates2;
         public async Task<ObservableCollection<State2>> LoadAllStates2()
         {
             IState2Repository repository = new State2Repository();
             return await repository.GetAllStatesAsync();
         }
-
-        private DailySchedule2 _dailySchedule2;
+        
         public async Task<DailySchedule2> LoadDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
             IDailySchedule2Repository repository = new DailySchedule2Repository();
             return await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
         }
 
-        private async void LoadFavorites()
+        private async Task<Dictionary<State2, List<Location2>>> LoadFavorites()
         {
-            _allStates2 = await LoadAllStates2();
-
+            var allStates = await LoadAllStates2();
             var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favorites = new Dictionary<State2, List<Location2>>();
 
@@ -89,7 +86,7 @@ namespace CorePowerYoges.WinPhone
                 foreach (JToken st in states)
                 {
                     var stateId = st.SelectToken("id").ToString();
-                    var state = _allStates2.Where(s => s.Id.Equals(stateId,
+                    var state = allStates.Where(s => s.Id.Equals(stateId,
                         StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                     var locations = (JArray)st.SelectToken("locations");
@@ -116,14 +113,17 @@ namespace CorePowerYoges.WinPhone
                 }
             }
 
-            foreach (KeyValuePair<State2, List<Location2>> kvp in favorites)
-            {
-                foreach (Location2 location in kvp.Value)
-                {
-                    var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.Id);
-                    location.DailySchedules.Add(dailySchedule);
-                }
-            } 
+            return favorites;
+
+            //test loading all schedules, we'd rather load on demand, however, to make everything speedier
+            //foreach (KeyValuePair<State2, List<Location2>> kvp in favorites)
+            //{
+            //    foreach (Location2 location in kvp.Value)
+            //    {
+            //        var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.Id);
+            //        location.DailySchedules.Add(dailySchedule);
+            //    }
+            //}
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
