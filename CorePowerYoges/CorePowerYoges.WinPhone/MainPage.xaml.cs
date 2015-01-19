@@ -56,7 +56,8 @@ namespace CorePowerYoges.WinPhone
             this.txtInput.Text = AppResourcesHelper.GetValue("SampleFavorites");
             LocalSettingsHelper.AddSetting("userData", txtInput.Text);
 
-            var favorites = await LoadFavoritesAsync();
+            var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
+            var favorites = await LoadFavoritesAsync(userData);
             //await LoadAllSchedulesAsync(favorites);
         }       
 
@@ -72,9 +73,8 @@ namespace CorePowerYoges.WinPhone
             return await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
         }
 
-        private async Task<Dictionary<State2, List<Location2>>> LoadFavoritesAsync()
+        private async Task<Dictionary<State2, List<Location2>>> LoadFavoritesAsync(JObject userData)
         {
-            var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favorites = new Dictionary<State2, List<Location2>>();
             var allStates = await LoadAllStates2();
 
