@@ -79,7 +79,7 @@ namespace CorePowerYoges.WinPhone
             var allStates = await LoadAllStates2();
 
             var states = (JArray)userData.SelectToken("favorites.states");
-            if (states != null && states.Count() > 0)
+            if (states != null && states.Count > 0)
             { 
                 foreach (JToken st in states)
                 {
@@ -88,7 +88,7 @@ namespace CorePowerYoges.WinPhone
                         StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                     var locations = (JArray)st.SelectToken("locations");
-                    if (locations != null && locations.Count() > 0)
+                    if (locations != null && locations.Count > 0)
                     {
                         foreach (JValue locationId in locations)
                         {
