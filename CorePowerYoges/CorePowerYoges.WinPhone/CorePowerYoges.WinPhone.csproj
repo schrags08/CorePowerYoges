@@ -95,8 +95,14 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Repository\DailySchedule2Repository.cs" />
+    <Compile Include="Repository\IDailySchedule2Repository.cs" />
+    <Compile Include="Repository\ILocation2Repository.cs" />
+    <Compile Include="Repository\IState2Repository.cs" />
     <Compile Include="Repository\ILocationRepository.cs" />
+    <Compile Include="Repository\Location2Repository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
+    <Compile Include="Repository\State2Repository.cs" />
     <Compile Include="Utils\AppResourcesHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

@@ -52,11 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DailySchedule2Service.cs" />
     <Compile Include="DailyScheduleService.cs" />
+    <Compile Include="IDailySchedule2Service.cs" />
     <Compile Include="IDailyScheduleService.cs" />
+    <Compile Include="IState2Service.cs" />
     <Compile Include="IStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateService.cs" />
+    <Compile Include="State2Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CorePowerYoges.DAL\CorePowerYoges.DAL.csproj">

@@ -16,5 +16,10 @@ namespace CorePowerYoges.Models
             this.Date = date;
             this.Sessions = new List<Session2>();
         }
+
+        public override string ToString()
+        {
+            return Date.DayOfWeek.ToString();
+        }
     }
 }

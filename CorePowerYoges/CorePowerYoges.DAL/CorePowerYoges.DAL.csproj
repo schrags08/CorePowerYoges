@@ -54,10 +54,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CorePowerWebsiteScraper2.cs" />
     <Compile Include="CorePowerWebsiteScraper.cs" />
+    <Compile Include="IDailySchedule2Repository.cs" />
     <Compile Include="IDailyScheduleRepository.cs" />
+    <Compile Include="IState2Repository.cs" />
     <Compile Include="IStateRepository.cs" />
     <Compile Include="StateListDiskLoader.cs" />
+    <Compile Include="StateListDiskLoader2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

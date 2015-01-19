@@ -53,51 +53,77 @@ namespace CorePowerYoges.WinPhone
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
 
-            this.txtInput.Text = "{ 'settings': { 'favoriteLocations': [ '864_16', '864_15', '864_17', '864_7', '110_6', '110_5'] } }";
+            //this.txtInput.Text = "{ 'settings': { 'favoriteLocations': [ '864_16', '864_15', '864_17', '864_7', '110_6', '110_5'] } }";
+
+            this.txtInput.Text = AppResourcesHelper.GetValue("SampleFavorites");
+
             LocalSettingsHelper.AddSetting("userData", txtInput.Text);
 
             LoadFavorites();
+        }       
+
+        private ObservableCollection<State2> _allStates2;
+        public async Task<ObservableCollection<State2>> LoadAllStates2()
+        {
+            IState2Repository repository = new State2Repository();
+            return await repository.GetAllStatesAsync();
         }
 
-        private ObservableCollection<State> _allStates;
-        public async Task LoadAllStates()
+        private DailySchedule2 _dailySchedule2;
+        public async Task<DailySchedule2> LoadDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
-            IStateRepository repository = new StateRepository();
-            _allStates = await repository.GetAllStatesAsync();
+            IDailySchedule2Repository repository = new DailySchedule2Repository();
+            return await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
         }
 
-        private DailySchedule _dailySchedule;
-        public async Task LoadDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
+        private async void LoadFavorites()
         {
-            IDailyScheduleRepository repository = new DailyScheduleRepository();
-            _dailySchedule = await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
-        }
+            _allStates2 = await LoadAllStates2();
 
-        private Location _location;
-        public async Task LoadLocationById(string locationId)
-        {
-            ILocationRepository repository = new LocationRepository();
-            _location = await repository.GetLocationByIdAsync(locationId);
-        }
+            var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
+            var favorites = new Dictionary<State2, List<Location2>>();
 
-        private async Task LoadFavorites()
-        {
-            var jim = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
-            var favoriteLocations = (JArray)jim.SelectToken("settings.favoriteLocations");
-            var currentFavorites = new List<string>();
-
-            if (favoriteLocations != null && favoriteLocations.Count() > 0)
-            {
-                foreach (JValue location in favoriteLocations)
+            var states = (JArray)userData.SelectToken("favorites.states");
+            if (states != null && states.Count() > 0)
+            { 
+                foreach (JToken st in states)
                 {
-                    var name = location.Value as string;
-                    currentFavorites.Add(name);
+                    var stateId = st.SelectToken("id").ToString();
+                    var state = _allStates2.Where(s => s.Id.Equals(stateId,
+                        StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+                    var locations = (JArray)st.SelectToken("locations");
+                    if (locations != null && locations.Count() > 0)
+                    {
+                        foreach (JValue locationId in locations)
+                        {
+                            var location = state.Locations.Where(l => l.Id.Equals(locationId.ToString(), 
+                                StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+                            if (favorites.ContainsKey(state))
+                            {
+                                favorites[state].Add(location);
+                            }
+                            else
+                            {
+                                var locationList = new List<Location2>();
+                                locationList.Add(location);
+
+                                favorites.Add(state, locationList);
+                            }
+                        }
+                    }
                 }
             }
 
-            //await LoadAllStates();
-            //await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, "ec4baf3", "110_6");
-            await LoadLocationById("110_6");
+            foreach (KeyValuePair<State2, List<Location2>> kvp in favorites)
+            {
+                foreach (Location2 location in kvp.Value)
+                {
+                    var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.Id);
+                    location.DailySchedules.Add(dailySchedule);
+                }
+            } 
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
