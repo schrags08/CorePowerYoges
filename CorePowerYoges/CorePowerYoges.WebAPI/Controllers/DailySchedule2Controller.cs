@@ -18,7 +18,7 @@ namespace CorePowerYoges.WebAPI.Controllers
             this._corePowerYogesService = corePowerYogesService;
         }
 
-        public DailySchedule2 Get(string date, string stateId, string locationId)
+        public DailySchedule Get(string date, string stateId, string locationId)
         {
             return this._corePowerYogesService.GetDailyScheduleByStateIdAndLocationId(date, stateId, locationId);
         }

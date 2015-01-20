@@ -9,6 +9,6 @@ namespace CorePowerYoges.DAL
 {
     public interface IDailySchedule2Repository
     {
-        DailySchedule2 GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId);
+        DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId);
     }
 }
