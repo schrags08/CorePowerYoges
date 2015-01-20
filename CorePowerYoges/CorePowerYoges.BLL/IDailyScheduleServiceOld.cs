@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.BLL
 {
-    public interface IDailySchedule2Service
+    public interface IDailyScheduleService
     {
-        DailySchedule2 GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId);
+        DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId);
     }
 }

@@ -10,23 +10,23 @@ using System.Web.Caching;
 
 namespace CorePowerYoges.BLL
 {
-    public class State2Service : IState2Service
+    public class StateService : IStateService
     {
         private Cache cache = HttpRuntime.Cache;
-        private IState2Repository _stateRepository;
+        private IStateRepository _stateRepository;
         private int allStateCacheDurationInMinutes;
 
-        public State2Service(IState2Repository stateRepository,
+        public StateService(IStateRepository stateRepository,
             int allStateCacheDurationInMinutes = 1440)
         {
             this._stateRepository = stateRepository;
             this.allStateCacheDurationInMinutes = allStateCacheDurationInMinutes;
         }
 
-        public IEnumerable<State2> GetAllStates()
+        public IEnumerable<State> GetAllStates()
         {
-            string cacheKey = "StateService2-AllStates";
-            IEnumerable<State2> dataFromCache = (IEnumerable<State2>)cache.Get(cacheKey);
+            string cacheKey = "StateService-AllStates";
+            IEnumerable<State> dataFromCache = (IEnumerable<State>)cache.Get(cacheKey);
 
             if (dataFromCache == null)
             {
@@ -44,26 +44,26 @@ namespace CorePowerYoges.BLL
             return dataFromCache;
         }
 
-        public State2 GetStateById(string id)
+        public State GetStateById(string id)
         {
             return GetAllStates()
                 .Where(s => s.Id == id).FirstOrDefault();
         }
 
-        public State2 GetStateByAbbreviation(string stateAbbr)
+        public State GetStateByAbbreviation(string stateAbbr)
         {
             return GetAllStates()
                 .Where(s => s.Abbreviation == stateAbbr.ToUpper()).FirstOrDefault();
         }
 
-        public Location2 GetLocationById(string id)
+        public Location GetLocationById(string id)
         {
             return GetAllStates().SelectMany(s => s.Locations).FirstOrDefault(l => l.Id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        public IEnumerable<Location2> GetLocationsByIds(string[] ids)
+        public IEnumerable<Location> GetLocationsByIds(string[] ids)
         {
-            var locations = new List<Location2>();
+            var locations = new List<Location>();
 
             foreach (string id in ids)
             {

@@ -11,13 +11,13 @@ using System.Web.Caching;
 
 namespace CorePowerYoges.BLL
 {
-    public class DailySchedule2Service : IDailySchedule2Service
+    public class DailyScheduleService : IDailyScheduleService
     {
         private Cache cache = HttpRuntime.Cache;
-        private IDailySchedule2Repository _dailyScheduleRepository;
+        private IDailyScheduleRepository _dailyScheduleRepository;
         private int dailyScheduleForLocationCacheDurationInMinutes;
 
-        public DailySchedule2Service(IDailySchedule2Repository dailyScheduleRepository, 
+        public DailyScheduleService(IDailyScheduleRepository dailyScheduleRepository, 
             int dailyScheduleForLocationCacheDurationInMinutes = 720)
         {
             this._dailyScheduleRepository = dailyScheduleRepository;
@@ -26,18 +26,18 @@ namespace CorePowerYoges.BLL
 
         private string GenerateCacheKey(string key)
         {
-            return string.Format("DailySchedule2Service-{0}", key);
+            return string.Format("DailyScheduleService-{0}", key);
         }
 
-        public DailySchedule2 GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
+        public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
             string key = string.Format("{0}-{1}-{2}", 
-                "DailySchedule2ForLocation", 
+                "DailyScheduleForLocation", 
                 locationId, 
                 date.ToShortDateString().Replace("/", ""));
 
             string cacheKey = GenerateCacheKey(key);
-            DailySchedule2 dailyScheduleFromCache = (DailySchedule2)cache.Get(cacheKey);
+            DailySchedule dailyScheduleFromCache = (DailySchedule)cache.Get(cacheKey);
 
             if (dailyScheduleFromCache == null)
             {
