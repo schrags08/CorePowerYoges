@@ -58,25 +58,25 @@ namespace CorePowerYoges.WinPhone
 
             var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favorites = await LoadFavoritesAsync(userData);
-            //await LoadAllSchedulesAsync(favorites);
+            await LoadAllSchedulesAsync(favorites);
         }       
 
-        public async Task<ObservableCollection<State2>> LoadAllStates2()
+        public async Task<ObservableCollection<State>> LoadAllStates()
         {
-            IState2Repository repository = new State2Repository();
+            IStateRepository repository = new StateRepository();
             return await repository.GetAllStatesAsync();
         }
         
-        public async Task<DailySchedule2> LoadDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
+        public async Task<DailySchedule> LoadDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
-            IDailySchedule2Repository repository = new DailySchedule2Repository();
+            IDailyScheduleRepository repository = new DailyScheduleRepository();
             return await repository.GetDailyScheduleByStateIdAndLocationIdAsync(date, stateId, locationId);
         }
 
-        private async Task<Dictionary<State2, List<Location2>>> LoadFavoritesAsync(JObject userData)
+        private async Task<Dictionary<State, List<Location>>> LoadFavoritesAsync(JObject userData)
         {
-            var favorites = new Dictionary<State2, List<Location2>>();
-            var allStates = await LoadAllStates2();
+            var favorites = new Dictionary<State, List<Location>>();
+            var allStates = await LoadAllStates();
 
             var states = (JArray)userData.SelectToken("favorites.states");
             if (states != null && states.Count > 0)
@@ -101,7 +101,7 @@ namespace CorePowerYoges.WinPhone
                             }
                             else
                             {
-                                var locationList = new List<Location2>();
+                                var locationList = new List<Location>();
                                 locationList.Add(location);
 
                                 favorites.Add(state, locationList);
@@ -114,12 +114,12 @@ namespace CorePowerYoges.WinPhone
             return favorites;            
         }
 
-        private async Task LoadAllSchedulesAsync(Dictionary<State2, List<Location2>> favorites)
+        private async Task LoadAllSchedulesAsync(Dictionary<State, List<Location>> favorites)
         {
             //test loading all schedules, we'd rather load on demand, however, to make everything speedier
-            foreach (KeyValuePair<State2, List<Location2>> kvp in favorites)
+            foreach (KeyValuePair<State, List<Location>> kvp in favorites)
             {
-                foreach (Location2 location in kvp.Value)
+                foreach (Location location in kvp.Value)
                 {
                     var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.Id);
                     location.DailySchedules.Add(dailySchedule);
