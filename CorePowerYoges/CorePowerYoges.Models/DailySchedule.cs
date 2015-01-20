@@ -9,14 +9,17 @@ namespace CorePowerYoges.Models
     public class DailySchedule
     {
         public DateTime Date { get; private set; }
-        public string LocationId { get; private set; }
         public List<Session> Sessions { get; set; }
         
-        public DailySchedule(DateTime date, string locationId)
+        public DailySchedule(DateTime date)
         {
             this.Date = date;
-            this.LocationId = locationId;
             this.Sessions = new List<Session>();
+        }
+
+        public override string ToString()
+        {
+            return Date.DayOfWeek.ToString();
         }
     }
 }

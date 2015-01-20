@@ -39,7 +39,7 @@ namespace CorePowerYoges.DAL
                     {
                         name = locationElem.Attribute("name").Value;
                         id = locationElem.Attribute("id").Value;
-                        var location = new Location(name, id, state.Id);
+                        var location = new Location(name, id);
 
                         state.Locations.Add(location);
                     }

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CorePowerYoges.WebAPI.Services
+namespace CorePowerYoges.BLL
 {
     public interface IDailyScheduleService
     {
-        DailySchedule GetDailyScheduleByDateAndLocation(DateTime date, Location location);
+        DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId);
     }
 }

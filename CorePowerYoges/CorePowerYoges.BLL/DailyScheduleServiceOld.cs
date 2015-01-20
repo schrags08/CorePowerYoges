@@ -26,7 +26,7 @@ namespace CorePowerYoges.BLL
 
         private string GenerateCacheKey(string key)
         {
-            return string.Format("DailySchedule2Service-{0}", key);
+            return string.Format("DailyScheduleService-{0}", key);
         }
 
         public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)

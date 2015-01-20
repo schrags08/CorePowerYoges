@@ -95,17 +95,17 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Repository\DailyScheduleRepository.cs" />
+    <Compile Include="Repository\IDailyScheduleRepository.cs" />
     <Compile Include="Repository\ILocationRepository.cs" />
+    <Compile Include="Repository\IStateRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
+    <Compile Include="Repository\StateRepository.cs" />
     <Compile Include="Utils\AppResourcesHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\DailyScheduleRepository.cs" />
-    <Compile Include="Repository\IDailyScheduleRepository.cs" />
-    <Compile Include="Repository\IStateRepository.cs" />
-    <Compile Include="Repository\StateRepository.cs" />
     <Compile Include="Utils\LocalSettingsHelper.cs" />
   </ItemGroup>
   <ItemGroup>

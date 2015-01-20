@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.Models
 {
-    /// <summary>
-    /// Represents a CorePowerYoga Location.  There can be one or many Locations in a State.
-    /// A location has multiple sessions per day.
-    /// </summary>
     public class Location
     {
         public string Name { get; private set; }
         public string Id { get; private set; }
-        public string StateId { get; private set; }
+        public List<DailySchedule> DailySchedules { get; set; }
 
-        public Location(string name, string id, string stateId)
+        public Location(string name, string id)
         {
             this.Name = name;
             this.Id = id;
-            this.StateId = stateId;
+            this.DailySchedules = new List<DailySchedule>();
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

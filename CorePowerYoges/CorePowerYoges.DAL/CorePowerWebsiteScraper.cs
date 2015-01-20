@@ -37,7 +37,7 @@ namespace CorePowerYoges.DAL
         /// <returns>A Daily Schedule for a Location on a given date</returns>
         public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
         {
-            var schedule = new DailySchedule(date.Date, locationId);
+            var schedule = new DailySchedule(date.Date);
             var url = string.Format(urlBaseFormatString, 
                 stateId,
                 locationId,
@@ -74,7 +74,7 @@ namespace CorePowerYoges.DAL
                         var teacherElement = node.Descendants("td").Where(s => ClassAttributeContainsString(s, "trainer")).FirstOrDefault();
                         var teacher = teacherElement.InnerText.Trim();
 
-                        var session = new Session(startTime, endTime, name, teacher, locationId);
+                        var session = new Session(startTime, endTime, name, teacher);
                         schedule.Sessions.Add(session);
                     }
                 }

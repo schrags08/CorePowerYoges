@@ -138,6 +138,9 @@
   <data name="LocationRequestUri" xml:space="preserve">
     <value>api/location/{0}</value>
   </data>
+  <data name="SampleFavorites" xml:space="preserve">
+    <value>{"favorites": {"states": [{"id": "ec4baf3", "locations": ["110_9", "110_5", "110_6", "941_2"] }, {"id": "ec16baf3", "locations": ["864_23", "864_7", "864_17"] }, {"id": "ec17baf3", "locations": ["32618_1", "864_4", "864_6"] }] } }</value>
+  </data>
   <data name="StateRequestUri" xml:space="preserve">
     <value>api/state</value>
   </data>
