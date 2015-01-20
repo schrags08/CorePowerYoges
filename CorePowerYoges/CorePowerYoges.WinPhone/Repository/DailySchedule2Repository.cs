@@ -15,11 +15,11 @@ namespace CorePowerYoges.WinPhone.Repository
     {
         private readonly string baseUrl = AppResourcesHelper.GetValue("ApiBaseUrl");
 
-        public async Task<DailySchedule> GetDailyScheduleByStateIdAndLocationIdAsync(DateTime date, string stateId, string locationId)
+        public async Task<DailySchedule2> GetDailyScheduleByStateIdAndLocationIdAsync(DateTime date, string stateId, string locationId)
         {
             string requestUriFormat = AppResourcesHelper.GetValue("DailyScheduleRequestUriFormat");
 
-            DailySchedule dailySchedule = null;
+            DailySchedule2 dailySchedule = null;
 
             using (var client = new HttpClient())
             {
@@ -30,7 +30,7 @@ namespace CorePowerYoges.WinPhone.Repository
                 HttpResponseMessage response = await client.GetAsync(string.Format(requestUriFormat, date.ToString("yyyy-MM-dd"), stateId, locationId));
                 if (response.IsSuccessStatusCode)
                 {
-                    dailySchedule = await response.Content.ReadAsAsync<DailySchedule>();
+                    dailySchedule = await response.Content.ReadAsAsync<DailySchedule2>();
                 }
             }
 

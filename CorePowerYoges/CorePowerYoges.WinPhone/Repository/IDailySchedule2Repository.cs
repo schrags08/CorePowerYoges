@@ -10,6 +10,6 @@ namespace CorePowerYoges.WinPhone.Repository
 {
     public interface IDailySchedule2Repository
     {
-        Task<DailySchedule> GetDailyScheduleByStateIdAndLocationIdAsync(DateTime date, string stateId, string locationId);
+        Task<DailySchedule2> GetDailyScheduleByStateIdAndLocationIdAsync(DateTime date, string stateId, string locationId);
     }
 }
