@@ -7,33 +7,33 @@ using System.Web;
 
 namespace CorePowerYoges.WebAPI.Services
 {
-    public class CorePowerYogesService2 : ICorePowerYogesService2
+    public class CorePowerYogesService : ICorePowerYogesService
     {
-        IState2Service _stateService;
-        IDailySchedule2Service _dailyScheduleService;
+        IStateService _stateService;
+        IDailyScheduleService _dailyScheduleService;
 
-        public CorePowerYogesService2(IState2Service stateService, IDailySchedule2Service dailyScheduleService)
+        public CorePowerYogesService(IStateService stateService, IDailyScheduleService dailyScheduleService)
         {            
             this._stateService = stateService;
             this._dailyScheduleService = dailyScheduleService;
         }
 
-        public IEnumerable<State2> GetAllStates()
+        public IEnumerable<State> GetAllStates()
         {
             return this._stateService.GetAllStates();
         }
 
-        public State2 GetStateById(string id)
+        public State GetStateById(string id)
         {
             return this._stateService.GetStateById(id);
         }
 
-        public Location2 GetLocationById(string id)
+        public Location GetLocationById(string id)
         {
             return this._stateService.GetLocationById(id);
         }
 
-        public DailySchedule2 GetDailyScheduleByStateIdAndLocationId(string date, string stateId, string locationId)
+        public DailySchedule GetDailyScheduleByStateIdAndLocationId(string date, string stateId, string locationId)
         {
             var parsedDate = new DateTime();
             if (DateTime.TryParse(date, out parsedDate))

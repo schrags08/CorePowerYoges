@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.WebAPI.Services
 {
-    public interface IStateService
+    public interface ICorePowerYogesService
     {
         IEnumerable<State> GetAllStates();
         State GetStateById(string id);
-        State GetStateByAbbreviation(string stateAbbr);
+        Location GetLocationById(string id);
+        DailySchedule GetDailyScheduleByStateIdAndLocationId(string date, string stateId, string locationId);
     }
 }
