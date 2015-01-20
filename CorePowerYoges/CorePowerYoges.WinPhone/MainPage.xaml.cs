@@ -58,7 +58,7 @@ namespace CorePowerYoges.WinPhone
 
             var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favorites = await LoadFavoritesAsync(userData);
-            await LoadAllSchedulesAsync(favorites);
+            //await LoadAllSchedulesAsync(favorites);
         }       
 
         public async Task<ObservableCollection<State>> LoadAllStates()
