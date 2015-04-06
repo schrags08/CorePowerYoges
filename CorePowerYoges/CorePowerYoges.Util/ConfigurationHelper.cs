@@ -59,11 +59,11 @@ namespace CorePowerYoges.Util
             }
         }
 
-        public static string StateListPath
+        public static string StateListDBConnectionString
         {
             get
             {
-                return GetConfigurationValueByKey("StateListPath");
+                return GetConfigurationValueByKey("StateListDBConnectionString");
             }
         }
     }

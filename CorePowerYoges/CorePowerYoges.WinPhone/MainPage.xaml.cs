@@ -51,10 +51,12 @@ namespace CorePowerYoges.WinPhone
             // handling the hardware Back button by registering for the
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.            
+            // this event is handled for you.
 
-            this.txtInput.Text = AppResourcesHelper.GetValue("SampleFavorites");
-            LocalSettingsHelper.AddSetting("userData", txtInput.Text);
+            // eventually we will load "user data" from local storage
+
+            //this.txtInput.Text = AppResourcesHelper.GetValue("SampleFavorites");
+            //LocalSettingsHelper.AddSetting("userData", txtInput.Text);
 
             var userData = JObject.Parse(LocalSettingsHelper.GetSetting("userData"));
             var favorites = await LoadFavoritesAsync(userData);
@@ -92,7 +94,7 @@ namespace CorePowerYoges.WinPhone
                     {
                         foreach (JValue locationId in locations)
                         {
-                            var location = state.Locations.Where(l => l.Id.Equals(locationId.ToString(), 
+                            var location = state.Locations.Where(l => l.CorePowerYogaId.Equals(locationId.ToString(), 
                                 StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                             if (favorites.ContainsKey(state))
@@ -121,7 +123,7 @@ namespace CorePowerYoges.WinPhone
             {
                 foreach (Location location in kvp.Value)
                 {
-                    var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.Id);
+                    var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.CorePowerYogaId);
                     location.DailySchedules.Add(dailySchedule);
                 }
             }
@@ -129,21 +131,21 @@ namespace CorePowerYoges.WinPhone
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            LocalSettingsHelper.AddSetting("userData", txtInput.Text);
+            //LocalSettingsHelper.AddSetting("userData", txtInput.Text);
         }
 
         private void btnDisplay_Click(object sender, RoutedEventArgs e)
         {
             // txtDisplay is a TextBlock defined in XAML.
-            txtDisplay.Text = "USER DATA: ";
+            //txtDisplay.Text = "USER DATA: ";
 
-            var value = LocalSettingsHelper.GetSetting("userData");
-            txtDisplay.Text += value as string;
+            //var value = LocalSettingsHelper.GetSetting("userData");
+            //txtDisplay.Text += value as string;
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            LocalSettingsHelper.RemoveSetting("userData");
+            //LocalSettingsHelper.RemoveSetting("userData");
         }
     }
 }

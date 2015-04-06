@@ -11,7 +11,6 @@ namespace CorePowerYoges.BLL
     {
         IEnumerable<State> GetAllStates();
 		State GetStateById(string id);
-        State GetStateByAbbreviation(string stateAbbr);
         Location GetLocationById(string id);
     }
 }

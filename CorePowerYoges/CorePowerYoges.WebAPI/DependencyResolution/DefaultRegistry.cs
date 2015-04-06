@@ -33,9 +33,15 @@ namespace CorePowerYoges.WebAPI.DependencyResolution {
                     scan.WithDefaultConventions();
                 });
 
+            //For(typeof(IStateService)).Use(typeof(StateService))
+            //    .Ctor<IStateRepository>("stateRepository")
+            //    .Is(new StateListDiskLoader(ConfigurationHelpers.StateListPath))
+            //    .Ctor<int>("allStateCacheDurationInMinutes")
+            //    .Is(ConfigurationHelpers.AllStateCacheDurationInMinutes);
+
             For(typeof(IStateService)).Use(typeof(StateService))
                 .Ctor<IStateRepository>("stateRepository")
-                .Is(new StateListDiskLoader(ConfigurationHelpers.StateListPath))
+                .Is(new StateListDatabaseLoader(ConfigurationHelpers.StateListDBConnectionString))
                 .Ctor<int>("allStateCacheDurationInMinutes")
                 .Is(ConfigurationHelpers.AllStateCacheDurationInMinutes);
 

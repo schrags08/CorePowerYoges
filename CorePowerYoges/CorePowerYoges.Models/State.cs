@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace CorePowerYoges.Models
 {
-    /// <summary>
-    /// One of the 50 states in the good ol' U.S. of A.
-    /// </summary>
     public class State
     {
+        /// <summary>
+        /// The two letter abbreviation for the State, in caps
+        /// </summary>
         public string Id { get; private set; }
-        public string Abbreviation { get; private set; }
-        public string Name { get; private set; }
-        public List<Location> Locations { get; set; }
+        public string CorePowerYogaId { get; private set; }
+        public string Name { get; private set; }                
+        public virtual List<Location> Locations { get; set; }
 
-        public State(string abbreviation, string name, string id)
+        public State(string id, string corePowerYogaId, string name)
         {
-            this.Abbreviation = abbreviation;
-            this.Name = name;
             this.Id = id;
+            this.CorePowerYogaId = corePowerYogaId;
+            this.Name = name;
             this.Locations = new List<Location>();
         }
 

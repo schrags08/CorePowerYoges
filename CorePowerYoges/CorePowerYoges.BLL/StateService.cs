@@ -50,15 +50,9 @@ namespace CorePowerYoges.BLL
                 .Where(s => s.Id == id).FirstOrDefault();
         }
 
-        public State GetStateByAbbreviation(string stateAbbr)
-        {
-            return GetAllStates()
-                .Where(s => s.Abbreviation == stateAbbr.ToUpper()).FirstOrDefault();
-        }
-
         public Location GetLocationById(string id)
         {
-            return GetAllStates().SelectMany(s => s.Locations).FirstOrDefault(l => l.Id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
+            return GetAllStates().SelectMany(s => s.Locations).FirstOrDefault(l => l.CorePowerYogaId.Equals(id, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public IEnumerable<Location> GetLocationsByIds(string[] ids)

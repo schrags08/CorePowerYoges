@@ -8,14 +8,18 @@ namespace CorePowerYoges.Models
 {
     public class Location
     {
+        public int Id { get; private set; }
+        public string StateId { get; private set; }
+        public string CorePowerYogaId { get; private set; }
         public string Name { get; private set; }
-        public string Id { get; private set; }
-        public List<DailySchedule> DailySchedules { get; set; }
+        public virtual List<DailySchedule> DailySchedules { get; set; }
 
-        public Location(string name, string id)
+        public Location(int id, string stateId, string corePowerYogaId, string name)
         {
-            this.Name = name;
             this.Id = id;
+            this.StateId = stateId;
+            this.CorePowerYogaId = corePowerYogaId;
+            this.Name = name;
             this.DailySchedules = new List<DailySchedule>();
         }
 

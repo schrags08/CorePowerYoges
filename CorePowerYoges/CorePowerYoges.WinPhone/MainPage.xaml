@@ -10,7 +10,7 @@
 
     <!--ContentPanel - place additional content here-->
     <!--ContentPanel - place additional content here-->
-    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+    <!--<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
         <TextBox Height="72" HorizontalAlignment="Left" Margin="12,6,0,0" Name="txtInput" 
       Text="INPUT DATA" VerticalAlignment="Top" Width="438" />
         <Button Content="Save Data" Height="72" HorizontalAlignment="Left" Margin="125,84,0,0" 
@@ -22,5 +22,28 @@
 
         <TextBlock Height="60" HorizontalAlignment="Left" Margin="25,422,0,0" Name="txtDisplay" 
       Text="USER DATA:" VerticalAlignment="Top" Width="395" />
+    </Grid>-->
+
+    <!--<Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,12">
+            <TextBlock x:Name="ApplicationTitle" x:Uid="ApplicationTitle" Style="{ThemeResource TitleTextBlockStyle}"/>
+        </StackPanel>
+
+    </Grid>-->
+    <Grid>
+        <Pivot x:Uid="Pivot" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+            <PivotItem
+                x:Uid="PivotItemFavorites"
+                Margin="19,14.5,0,0"
+                CommonNavigationTransitionInfo.IsStaggerElement="True">
+                
+            </PivotItem>
+        </Pivot>
     </Grid>
+    
 </Page>
