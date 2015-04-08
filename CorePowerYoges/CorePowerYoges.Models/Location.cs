@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,24 @@ namespace CorePowerYoges.Models
 {
     public class Location
     {
-        public int Id { get; private set; }
-        public string StateId { get; private set; }
-        public string CorePowerYogaId { get; private set; }
-        public string Name { get; private set; }
-        public virtual List<DailySchedule> DailySchedules { get; set; }
+        public int LocationId { get; set; }
+        public string Name { get; set; }
+        public string CorePowerYogaLocationId { get; set; }
+        public int StateId { get; set; }
+        
+        [JsonIgnore]
+        public virtual State State { get; set; }
 
-        public Location(int id, string stateId, string corePowerYogaId, string name)
+        public Location()
         {
-            this.Id = id;
-            this.StateId = stateId;
-            this.CorePowerYogaId = corePowerYogaId;
+        }
+
+        public Location(int locationId, string name, string corePowerYogaLocationId, int stateId)
+        {
+            this.LocationId = locationId;
             this.Name = name;
-            this.DailySchedules = new List<DailySchedule>();
+            this.CorePowerYogaLocationId = corePowerYogaLocationId;
+            this.StateId = stateId;
         }
 
         public override string ToString()

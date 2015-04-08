@@ -9,9 +9,6 @@ namespace CorePowerYoges.WebAPI.Services
 {
     public interface ICorePowerYogesService
     {
-        IEnumerable<State> GetAllStates();
-        State GetStateById(string id);
-        Location GetLocationById(string id);
-        DailySchedule GetDailyScheduleByStateIdAndLocationId(string date, string stateId, string locationId);
+        DailySchedule GetDailyScheduleByStateIdAndLocationId(string date, string corePowerYogaStateId, string corePowerYogaLocationId);
     }
 }

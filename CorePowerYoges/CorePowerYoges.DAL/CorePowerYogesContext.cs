@@ -1,14 +1,16 @@
 ﻿using CorePowerYoges.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CorePowerYoges.DAL
 {
-    public interface IStateRepository
+    public class CorePowerYogesContext : DbContext
     {
-        IEnumerable<State> GetAllStates();
+        public DbSet<State> States { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }

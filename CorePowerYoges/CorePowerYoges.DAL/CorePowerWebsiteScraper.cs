@@ -32,15 +32,15 @@ namespace CorePowerYoges.DAL
         /// Gets a Daily Schedule from the CPY website.
         /// </summary>
         /// <param name="date">The date of the desired Daily Schedule</param>
-        /// <param name="stateId">the stateId of the desired Daily Schedule</param>
-        /// <param name="locationId">the locationId of the desired Daily Schedule</param>
+        /// <param name="corePowerYogaStateId">the stateId of the desired Daily Schedule</param>
+        /// <param name="corePowerYogaLocationId">the locationId of the desired Daily Schedule</param>
         /// <returns>A Daily Schedule for a Location on a given date</returns>
-        public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
+        public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string corePowerYogaStateId, string corePowerYogaLocationId)
         {
             var schedule = new DailySchedule(date.Date);
             var url = string.Format(urlBaseFormatString, 
-                stateId,
-                locationId,
+                corePowerYogaStateId,
+                corePowerYogaLocationId,
                 date.ToString(urlShortDateFormat),
                 date.ToString(urlShortDateFormat));
 

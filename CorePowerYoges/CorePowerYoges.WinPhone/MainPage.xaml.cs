@@ -94,7 +94,7 @@ namespace CorePowerYoges.WinPhone
                     {
                         foreach (JValue locationId in locations)
                         {
-                            var location = state.Locations.Where(l => l.CorePowerYogaId.Equals(locationId.ToString(), 
+                            var location = state.Locations.Where(l => l.CorePowerYogaLocationId.Equals(locationId.ToString(), 
                                 StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                             if (favorites.ContainsKey(state))
@@ -123,7 +123,7 @@ namespace CorePowerYoges.WinPhone
             {
                 foreach (Location location in kvp.Value)
                 {
-                    var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.CorePowerYogaId);
+                    var dailySchedule = await LoadDailyScheduleByStateIdAndLocationId(DateTime.Now, kvp.Key.Id, location.CorePowerYogaLocationId);
                     location.DailySchedules.Add(dailySchedule);
                 }
             }

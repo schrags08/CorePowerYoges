@@ -54,7 +54,7 @@ namespace CorePowerYoges.Models
                     {
                         foreach (JValue locationId in locations)
                         {
-                            var location = state.Locations.Where(l => l.CorePowerYogaId.Equals(locationId.ToString(),
+                            var location = state.Locations.Where(l => l.CorePowerYogaLocationId.Equals(locationId.ToString(),
                                 StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                             if (favorites.ContainsKey(state))

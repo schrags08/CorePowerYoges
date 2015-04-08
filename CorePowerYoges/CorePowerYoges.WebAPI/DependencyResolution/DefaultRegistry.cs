@@ -27,23 +27,12 @@ namespace CorePowerYoges.WebAPI.DependencyResolution {
 
         public DefaultRegistry() {
             Scan(
-                scan =>
-                {
+                scan => {
                     scan.TheCallingAssembly();
                     scan.WithDefaultConventions();
+					scan.With(new ControllerConvention());
                 });
-
-            //For(typeof(IStateService)).Use(typeof(StateService))
-            //    .Ctor<IStateRepository>("stateRepository")
-            //    .Is(new StateListDiskLoader(ConfigurationHelpers.StateListPath))
-            //    .Ctor<int>("allStateCacheDurationInMinutes")
-            //    .Is(ConfigurationHelpers.AllStateCacheDurationInMinutes);
-
-            For(typeof(IStateService)).Use(typeof(StateService))
-                .Ctor<IStateRepository>("stateRepository")
-                .Is(new StateListDatabaseLoader(ConfigurationHelpers.StateListDBConnectionString))
-                .Ctor<int>("allStateCacheDurationInMinutes")
-                .Is(ConfigurationHelpers.AllStateCacheDurationInMinutes);
+            //For<IExample>().Use<Example>();
 
             For(typeof(IDailyScheduleService)).Use(typeof(DailyScheduleService))
                 .Ctor<IDailyScheduleRepository>("dailyScheduleRepository")

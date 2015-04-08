@@ -9,7 +9,7 @@ namespace CorePowerYoges.Models
     public class DailySchedule
     {
         public DateTime Date { get; private set; }
-        public virtual List<Session> Sessions { get; set; }
+        public List<Session> Sessions { get; set; }
         
         public DailySchedule(DateTime date)
         {

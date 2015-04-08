@@ -9,6 +9,6 @@ namespace CorePowerYoges.BLL
 {
     public interface IDailyScheduleService
     {
-        DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId);
+        DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string corePowerYogaStateId, string corePowerYogaLocationId);
     }
 }

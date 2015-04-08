@@ -29,11 +29,11 @@ namespace CorePowerYoges.BLL
             return string.Format("DailySchedule2Service-{0}", key);
         }
 
-        public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string stateId, string locationId)
+        public DailySchedule GetDailyScheduleByStateIdAndLocationId(DateTime date, string corePowerYogaStateId, string corePowerYogaLocationId)
         {
             string key = string.Format("{0}-{1}-{2}", 
                 "DailyScheduleForLocation", 
-                locationId, 
+                corePowerYogaLocationId, 
                 date.ToShortDateString().Replace("/", ""));
 
             string cacheKey = GenerateCacheKey(key);
@@ -43,8 +43,8 @@ namespace CorePowerYoges.BLL
             {
                 // no data in cache, load data externally
                 dailyScheduleFromCache = _dailyScheduleRepository.GetDailyScheduleByStateIdAndLocationId(date,
-                    stateId,
-                    locationId);
+                    corePowerYogaStateId,
+                    corePowerYogaLocationId);
 
                 // add data to cache
                 cache.Insert(cacheKey, 

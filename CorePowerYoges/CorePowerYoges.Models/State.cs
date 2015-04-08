@@ -8,19 +8,24 @@ namespace CorePowerYoges.Models
 {
     public class State
     {
-        /// <summary>
-        /// The two letter abbreviation for the State, in caps
-        /// </summary>
-        public string Id { get; private set; }
-        public string CorePowerYogaId { get; private set; }
-        public string Name { get; private set; }                
+        public int StateId { get; set; }
+        public string Name { get; set; }
+        public string Abbreviation { get; set; }
+        public string CorePowerYogaStateId { get; set; }
+        
         public virtual List<Location> Locations { get; set; }
 
-        public State(string id, string corePowerYogaId, string name)
+        public State()
         {
-            this.Id = id;
-            this.CorePowerYogaId = corePowerYogaId;
+        }
+
+        public State(int stateId, string name, string abbreviation, string corePowerYogaStateId)
+        {
+            this.StateId = stateId;
             this.Name = name;
+            this.Abbreviation = abbreviation;
+            this.CorePowerYogaStateId = corePowerYogaStateId;
+            
             this.Locations = new List<Location>();
         }
 

@@ -58,13 +58,5 @@ namespace CorePowerYoges.Util
                 return GetConfigurationIntValueByKey("AllStateCacheDurationInMinutes");
             }
         }
-
-        public static string StateListDBConnectionString
-        {
-            get
-            {
-                return GetConfigurationValueByKey("StateListDBConnectionString");
-            }
-        }
     }
 }

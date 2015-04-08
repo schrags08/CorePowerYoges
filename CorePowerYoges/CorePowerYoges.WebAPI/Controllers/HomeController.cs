@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorePowerYoges.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,15 @@ namespace CorePowerYoges.WebAPI.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
+
+            //using (var context = new CorePowerYogesContext())
+            //{
+            //    var states = context.States.ToList();
+            //    foreach (var state in states)
+            //    {
+            //        var s = state.Name;
+            //    }
+            //}
 
             return View();
         }
